@@ -1,24 +1,13 @@
 # Gosplan
 
-> Nome em homenagem (meio de brincadeira) ao **Gosplan** soviético — o comitê
-> que planejava tudo na URSS. Aqui é bem menos totalitário: é só o "órgão que
-> planeja" a sua agenda.
+A ideia desse app é facilitar e agilizar a organização da sua agenda, usando linguagem natural e IA para interpretar as suas mensagens e traduzir para a API.
 
-Gosplan é um app de agenda onde você não preenche formulário nenhum. Você
-escreve numa caixa de chat, tipo conversando com alguém: **"dentista quinta
-às 15h"**, **"almoço com a Marina sexta que vem, meio-dia, no restaurante
-japonês perto do trabalho"**, **"reunião de alinhamento toda segunda às 9h
-até o fim do mês"** — e a IA entende, monta o evento certinho (título, data,
-horário, local, descrição) e te mostra um cardzinho pra você conferir antes
-de qualquer coisa ir parar de verdade no seu Google Calendar.
-
-A ideia é resolver aquela fricção chata de calendário: abrir o app, clicar em
-"novo evento", preencher campo por campo, escolher fuso horário, etc. Aqui
-você só fala o que quer, do jeito que falaria pra uma pessoa, e o Gosplan
-traduz isso pra um evento de verdade.
 
 (Serve de inspiração o [Toki](https://toki.com), que faz algo parecido —
-o Gosplan é uma versão livre, open source e auto-hospedável dessa ideia.)
+o Gosplan é uma versão livre e open source dessa ideia. **Hospedada**, não
+self-hosted: você não sobe sua própria instância, usa a instância pública do
+Gosplan. Só a chave de API da IA e o OAuth Client do Google são seus — ver
+abaixo.)
 
 ## Como funciona, na prática
 
