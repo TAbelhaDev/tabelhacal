@@ -10,18 +10,18 @@
 Um Worker central (Cloudflare) serve o frontend (PWA) e a API. Sem backend
 separado — tudo no mesmo Worker.
 
-| Camada          | Escolha                                            |
-| --------------- | --------------------------------------------------- |
-| UI framework    | **SvelteKit** (Svelte 5 / runes)                     |
-| UI kit          | **shadcn-svelte** + Tailwind v4                      |
-| PWA             | `@vite-pwa/sveltekit`                                |
-| Deploy          | Cloudflare Workers (`@sveltejs/adapter-cloudflare`)  |
-| DB              | **D1** (SQLite) via Drizzle ORM                      |
-| Sessões         | **KV**                                               |
-| Segredos        | Worker secret `MASTER_KEY` (AES-GCM/WebCrypto)       |
+| Camada          | Escolha                                               |
+| --------------- | ----------------------------------------------------- |
+| UI framework    | **SvelteKit** (Svelte 5 / runes)                      |
+| UI kit          | **shadcn-svelte** + Tailwind v4                       |
+| PWA             | `@vite-pwa/sveltekit`                                 |
+| Deploy          | Cloudflare Workers (`@sveltejs/adapter-cloudflare`)   |
+| DB              | **D1** (SQLite) via Drizzle ORM                       |
+| Sessões         | **KV**                                                |
+| Segredos        | Worker secret `MASTER_KEY` (AES-GCM/WebCrypto)        |
 | IA (parse)      | BYOK — chave do usuário, tool use / structured output |
-| Calendário      | Google Calendar API, BYO OAuth Client por usuário    |
-| Package manager | Bun                                                  |
+| Calendário      | Google Calendar API, BYO OAuth Client por usuário     |
+| Package manager | Bun                                                   |
 
 ## Scaffold inicial
 

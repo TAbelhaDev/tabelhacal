@@ -125,7 +125,10 @@ ai_credentials      -- BYOK de IA (seção 2.2)
   user_id, provider, model, key_encrypted, nonce
 
 google_oauth_clients -- Client ID/Secret DO PRÓPRIO usuário (seção 2.3)
-  user_id, client_id_encrypted, client_secret_encrypted, nonce, created_at
+  -- nonce separado por segredo (client_id e client_secret): AES-GCM não pode
+  -- reusar nonce com a mesma chave pra cifrar dois textos diferentes.
+  user_id, client_id_encrypted, client_id_nonce, client_secret_encrypted,
+  client_secret_nonce, created_at
 
 google_tokens       -- refresh token obtido via OAuth usando o client acima
   user_id, refresh_token_encrypted, nonce, scope, expiry
