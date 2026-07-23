@@ -2,7 +2,6 @@
 
 A ideia desse app é facilitar e agilizar a organização da sua agenda, usando linguagem natural e IA para interpretar as suas mensagens e traduzir para a API.
 
-
 (Serve de inspiração o [Toki](https://toki.com), que faz algo parecido —
 o Gosplan é uma versão livre e open source dessa ideia. **Hospedada**, não
 self-hosted: você não sobe sua própria instância, usa a instância pública do

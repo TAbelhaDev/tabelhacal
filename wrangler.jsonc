@@ -12,6 +12,9 @@
 	},
 	"workers_dev": true,
 	"preview_urls": true,
+	"vars": {
+		"ORIGIN": "https://gosplan.ianptkcs-023.workers.dev"
+	},
 	"d1_databases": [
 		{
 			"binding": "DB",

@@ -10,7 +10,6 @@
 
 <svelte:head>
 	<link rel="icon" href="/favicon.ico" sizes="48x48" />
-	<link rel="icon" href="/icon-source.svg" sizes="any" type="image/svg+xml" />
 	<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -- gerado pelo plugin (virtual:pwa-info), não é input do usuário -->
 	{@html webManifestLink}
