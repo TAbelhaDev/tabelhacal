@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "gosplan",
+      "dependencies": {
+        "sveltekit-flash-message": "^2.4.6",
+      },
       "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@fontsource-variable/inter": "^5.3.0",
@@ -1239,6 +1242,8 @@
     "svelte-sonner": ["svelte-sonner@1.1.1", "", { "dependencies": { "runed": "^0.28.0" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-5cd3p7wa4cq0NsqslMwdlPb7x1JglEZ/GKrLePWNr5bCxR1nagAVrY01FRFrXfUGs41miLt3C327+8XJo5BzZw=="],
 
     "svelte-toolbelt": ["svelte-toolbelt@0.10.6", "", { "dependencies": { "clsx": "^2.1.1", "runed": "^0.35.1", "style-to-object": "^1.0.8" }, "peerDependencies": { "svelte": "^5.30.2" } }, "sha512-YWuX+RE+CnWYx09yseAe4ZVMM7e7GRFZM6OYWpBKOb++s+SQ8RBIMMe+Bs/CznBMc0QPLjr+vDBxTAkozXsFXQ=="],
+
+    "sveltekit-flash-message": ["sveltekit-flash-message@2.4.6", "", { "peerDependencies": { "@sveltejs/kit": "1.x || 2.x", "svelte": "3.x || 4.x || >=5.0.0-next.51" } }, "sha512-++FGMWiKbQyJn133xwyTAKzoW7NPtsa3BrYq33IlR7Efh2J0XvLXg6rZkAROM8eKBG9s2MoxDANFfxa6pOxS6A=="],
 
     "tabbable": ["tabbable@6.5.0", "", {}, "sha512-wieBHXygIm7OyQOu5hQlkk62/WyCFYGlWg7L6/ZCUZwx0o398Zkn4pVmMyfYhfMG8kGrj/Krt8eIk6UKC6VzwA=="],
 

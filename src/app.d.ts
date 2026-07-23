@@ -1,6 +1,8 @@
 /// <reference types="vite-plugin-pwa/client" />
 /// <reference types="vite-plugin-pwa/info" />
 
+import type { ToastType } from '$lib/enums/toast-type';
+
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
@@ -16,7 +18,9 @@ declare global {
 		interface Locals {
 			userId: string | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			flash?: { type: ToastType; message: string };
+		}
 		// interface PageState {}
 	}
 }

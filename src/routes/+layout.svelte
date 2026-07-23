@@ -1,11 +1,32 @@
 <script lang="ts">
 	import './layout.css';
+	import { page } from '$app/state';
 	import { Toaster } from '$lib/components/ui/sonner';
+	import { ToastType } from '$lib/enums/toast-type';
 	import { pwaInfo } from 'virtual:pwa-info';
+	import { toast } from 'svelte-sonner';
+	import { getFlash } from 'sveltekit-flash-message';
 
 	let { children } = $props();
 
 	let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
+
+	const flash = getFlash(page);
+
+	$effect(() => {
+		const f = $flash;
+		if (!f) return;
+
+		if (f.type === ToastType.success) {
+			toast.success(f.message);
+		} else if (f.type === ToastType.error) {
+			toast.error(f.message);
+		} else if (f.type === ToastType.info) {
+			toast.info(f.message);
+		} else if (f.type === ToastType.warning) {
+			toast.warning(f.message);
+		}
+	});
 </script>
 
 <svelte:head>

@@ -1,10 +1,12 @@
 import { error, redirect } from '@sveltejs/kit';
+import { setFlash } from 'sveltekit-flash-message/server';
 import type { Actions, PageServerLoad } from './$types';
 import { eq, desc } from 'drizzle-orm';
 import { getDb } from '$lib/server/db';
 import { events } from '$lib/server/db/schema';
 import { getUserAccessToken } from '$lib/server/google/tokens';
 import { deleteCalendarEvent } from '$lib/server/google/calendar';
+import { ToastType } from '$lib/enums/toast-type';
 
 export const load: PageServerLoad = async ({ locals, platform }) => {
 	if (!locals.userId) redirect(303, '/onboarding/ai');
@@ -20,7 +22,8 @@ export const load: PageServerLoad = async ({ locals, platform }) => {
 };
 
 export const actions: Actions = {
-	delete: async ({ request, locals, platform }) => {
+	delete: async (event) => {
+		const { request, locals, platform, cookies } = event;
 		if (!locals.userId) error(401, 'Não autenticado.');
 
 		const form = await request.formData();
@@ -31,10 +34,19 @@ export const actions: Actions = {
 		const [existing] = await db.select().from(events).where(eq(events.id, eventId));
 		if (!existing || existing.userId !== locals.userId) error(404, 'Evento não encontrado.');
 
-		const accessToken = await getUserAccessToken(db, platform!.env.MASTER_KEY, locals.userId);
-		await deleteCalendarEvent(accessToken, existing.googleEventId);
-		await db.delete(events).where(eq(events.id, eventId));
+		try {
+			const accessToken = await getUserAccessToken(db, platform!.env.MASTER_KEY, locals.userId);
+			await deleteCalendarEvent(accessToken, existing.googleEventId);
+			await db.delete(events).where(eq(events.id, eventId));
+		} catch {
+			setFlash(
+				{ type: ToastType.error, message: 'Falha ao excluir o evento. Tente novamente.' },
+				cookies
+			);
+			return { success: false };
+		}
 
+		setFlash({ type: ToastType.success, message: 'Evento excluído.' }, cookies);
 		return { success: true };
 	}
 };

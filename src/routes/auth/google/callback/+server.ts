@@ -1,4 +1,5 @@
-import { error, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+import { redirect } from 'sveltekit-flash-message/server';
 import type { RequestHandler } from './$types';
 import { consumeOauthState } from '$lib/server/oauth-state';
 import { readDraft, deleteDraft } from '$lib/server/onboarding-draft';
@@ -9,6 +10,7 @@ import { getDb } from '$lib/server/db';
 import { findUserByEmail, createUser } from '$lib/server/db/users';
 import { aiCredentials, googleOauthClients, googleTokens } from '$lib/server/db/schema';
 import { createSession } from '$lib/server/session';
+import { ToastType } from '$lib/enums/toast-type';
 
 export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 	const code = url.searchParams.get('code');
@@ -89,7 +91,11 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 
 		await deleteDraft(kv, cookies, draftId);
 		await createSession(kv, cookies, user.id);
-		redirect(303, '/chat');
+		redirect(
+			'/chat',
+			{ type: ToastType.success, message: 'Conta conectada! Bem-vindo ao Gosplan.' },
+			cookies
+		);
 	}
 
 	// mode === 'login'
@@ -127,5 +133,5 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 	}
 
 	await createSession(kv, cookies, userId);
-	redirect(303, '/chat');
+	redirect('/chat', { type: ToastType.success, message: 'Login realizado.' }, cookies);
 };
