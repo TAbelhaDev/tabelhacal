@@ -1,6 +1,6 @@
 // Lista curada de providers/modelos pro dropdown de onboarding (ESCOPO.md §2.2).
 // IDs de modelo mudam com o tempo — confirmar contra a documentação oficial do
-// provider antes de atualizar esta lista (mesmo espírito de STACK.md).
+// provider antes de atualizar esta lista.
 export const AI_PROVIDERS = {
 	anthropic: {
 		label: 'Anthropic',

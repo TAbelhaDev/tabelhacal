@@ -166,5 +166,3 @@ events              -- eventos criados pelo app (cache/histórico local)
 - **Issues**: templates de bug report e feature request em
   `.github/ISSUE_TEMPLATE/`.
 - **Contribuição**: ver `CONTRIBUTING.md`.
-
-Ver `STACK.md` pra arquitetura técnica.

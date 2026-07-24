@@ -6,6 +6,10 @@ export const users = sqliteTable('users', {
 		.$defaultFn(() => crypto.randomUUID()),
 	email: text('email').notNull().unique(),
 	timezone: text('timezone').notNull().default('UTC'),
+	// Array JSON de antecedências (em minutos) pros lembretes proativos, ex:
+	// "[30,1440]" = avisa 30min e 1 dia antes. "[]" desativa lembretes mesmo
+	// com push inscrito. Ver src/lib/server/push/reminders.ts.
+	reminderOffsetsMinutes: text('reminder_offsets_minutes').notNull().default('[30]'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.$defaultFn(() => new Date())
@@ -49,7 +53,10 @@ export const googleTokens = sqliteTable('google_tokens', {
 	expiry: integer('expiry', { mode: 'timestamp' })
 });
 
-// Eventos criados pelo app — cache/histórico local
+// Histórico local de todo evento tocado pelo Gosplan via chat (create/modify/
+// delete/respond) — não só o que o app criou. `status` marca o que aconteceu;
+// `delete` nunca remove a linha (é assim que o Histórico continua mostrando
+// eventos apagados). Ver README "Histórico".
 export const events = sqliteTable('events', {
 	id: text('id')
 		.primaryKey()
@@ -57,19 +64,37 @@ export const events = sqliteTable('events', {
 	userId: text('user_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),
+	calendarId: text('calendar_id').notNull().default('primary'),
 	googleEventId: text('google_event_id').notNull(),
 	title: text('title').notNull(),
 	startAt: integer('start_at', { mode: 'timestamp' }).notNull(),
 	endAt: integer('end_at', { mode: 'timestamp' }).notNull(),
 	location: text('location'),
 	description: text('description'),
+	// 'active' | 'deleted'
+	status: text('status').notNull().default('active'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.$defaultFn(() => new Date()),
-	// Marca quando o lembrete proativo (push, ~30min antes de startAt) foi
-	// disparado — null = ainda não notificado. Ver ESCOPO.md "lembretes proativos"
-	// e src/lib/server/push/reminders.ts.
+	// Substituído por event_reminders (permite N lembretes por evento, cada um
+	// com sua própria antecedência) — mantido só pra não precisar de uma
+	// migration de "rename" no SQLite; não é mais lido/escrito pelo código.
 	reminderSentAt: integer('reminder_sent_at', { mode: 'timestamp' })
+});
+
+// Uma linha por lembrete já disparado (evento, antecedência) — evita reenviar
+// o mesmo lembrete a cada execução do cron. Ver src/lib/server/push/reminders.ts.
+export const eventReminders = sqliteTable('event_reminders', {
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	eventId: text('event_id')
+		.notNull()
+		.references(() => events.id, { onDelete: 'cascade' }),
+	offsetMinutes: integer('offset_minutes').notNull(),
+	sentAt: integer('sent_at', { mode: 'timestamp' })
+		.notNull()
+		.$defaultFn(() => new Date())
 });
 
 // Inscrições de Web Push (PushManager.subscribe()) — uma por dispositivo/navegador

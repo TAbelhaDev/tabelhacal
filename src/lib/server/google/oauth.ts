@@ -1,4 +1,4 @@
-// Fluxo BYO OAuth Client — ver ESCOPO.md §2.3 e STACK.md.
+// Fluxo BYO OAuth Client — ver ESCOPO.md §2.3.
 // Escopo inclui openid+email: o login em si também é via Google (sem
 // cadastro/senha própria — decisão de identidade do MVP), então o e-mail do
 // userinfo é o que identifica/cria o usuário.

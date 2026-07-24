@@ -6,8 +6,8 @@ A ideia desse app é facilitar e agilizar a organização da sua agenda, usando 
 
 1. Você escreve o que quer fazer, em linguagem natural, na tela de chat.
 2. A IA traduz isso em um comando: listar, modificar, criar ou apagar eventos no seu Google Calendar e estrutura os dados de acordo com o que é esperado pela API.
-3. Antes de qualquer mudança, um card de confirmação aparece, mostrando o que será feito (ex: criar um evento com título, data/hora, local e descrição). Você pode confirmar, modificar algum campo manualmente, pedir para a IA fazer um ajuste manual ou cancelar.
-4. Uma vez confirmado, o comando é executado automaticamente no seu Google Calendar e registrado temporariamente no banco do Gosplan, para que você possa ver o histórico de tudo que foi feito.
+3. Antes de qualquer mudança, um card de confirmação aparece, mostrando o que será feito (ex: criar um evento com título, data/hora, local e descrição). Você pode confirmar, modificar algum campo manualmente, pedir para a IA fazer um ajuste pontual ou cancelar.
+4. Uma vez confirmado, o comando é executado automaticamente no seu Google Calendar e registrado temporariamente no banco do Gosplan, para que você possa ver o histórico do que foi feito.
 
 Também funciona como PWA: você pode "instalar" no celular ou no desktop e usar como um app nativo, com atualização automática (aparece um aviso quando uma versão nova for lançada).
 
@@ -31,18 +31,18 @@ Ou seja: o Gosplan cuida do hosting, da UI e de orquestrar tudo, mas quem "paga 
 - **Onboarding guiado** em duas etapas: configurar a IA (chave + modelo) e conectar o Google Calendar (wizard explicando como criar o projeto no GCP).
 - **Chat em linguagem natural** pra listar, criar, modificar, apagar ou responder convites de eventos em qualquer uma das suas agendas conectadas (não só a `primary`) — inclusive eventos que já existiam antes do Gosplan — com card de confirmação antes de qualquer mudança real. Eventos recorrentes também são suportados (ex: "toda segunda às 9h até o fim do mês"), com opção de editar só uma ocorrência ou a série inteira.
 - **Lembretes proativos**: notificação push ~30 minutos antes de um evento começar (opt-in na tela de histórico).
-- **Histórico**: uma tela dedicada com tudo que já foi criado pelo app (independente do chat), de onde também dá pra excluir direto.
+- **Histórico**: uma tela dedicada com tudo que já foi feito pelo app (independente do chat), de onde também dá pra excluir direto.
 - **Login via Google**, sem cadastro separado de e-mail/senha, sua conta Google já é sua identidade no app.
 - **PWA instalável**, com prompt de atualização quando versões novas são lançadas.
 - Fuso horário detectado automaticamente do seu navegador no onboarding.
 
-### O que ainda não tem (mas tá no radar)
+### O que ainda não tem, mas tá no radar
 
 - Input por voz e por imagem.
 - Outros calendários além do Google (Apple, Outlook).
 - Criar evento por WhatsApp/Telegram.
 
-Ver `ESCOPO.md` pra decisões de produto com mais detalhe, e `STACK.md` pra arquitetura técnica.
+Ver `ESCOPO.md` pra decisões de produto com mais detalhe.
 
 ## Rodando localmente
 
@@ -51,7 +51,7 @@ Stack: SvelteKit + Cloudflare Workers (D1 + KV), Bun como package manager.
 ```sh
 bun install
 
-# aplica as migrations no D1 local (só precisa rodar 1x)
+# aplica as migrations no D1 local
 bunx wrangler d1 migrations apply gosplan-db --local
 
 bun run dev

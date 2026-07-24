@@ -3,6 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import PushSubscribe from '$lib/PushSubscribe.svelte';
+	import ReminderSettings from '$lib/ReminderSettings.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -24,16 +25,24 @@
 	</div>
 
 	<PushSubscribe vapidPublicKey={data.vapidPublicKey} />
+	<ReminderSettings initialOffsetsMinutes={data.reminderOffsetsMinutes} />
 
 	{#if data.events.length === 0}
-		<p class="text-sm text-muted-foreground">Nenhum evento criado ainda.</p>
+		<p class="text-sm text-muted-foreground">Nenhum evento por aqui ainda.</p>
 	{/if}
 
 	{#each data.events as event (event.id)}
-		<Card.Root>
+		<Card.Root class={event.status === 'deleted' ? 'opacity-60' : ''}>
 			<Card.Header>
-				<Card.Title>{event.title}</Card.Title>
-				<Card.Description>{formatRange(event.startAt, event.endAt)}</Card.Description>
+				<Card.Title class={event.status === 'deleted' ? 'line-through' : ''}
+					>{event.title}</Card.Title
+				>
+				<Card.Description>
+					{formatRange(event.startAt, event.endAt)}
+					{#if event.status === 'deleted'}
+						· <span class="font-medium">Apagado</span>
+					{/if}
+				</Card.Description>
 			</Card.Header>
 			{#if event.location || event.description}
 				<Card.Content class="flex flex-col gap-1 text-sm">
@@ -41,12 +50,14 @@
 					{#if event.description}<p><strong>Descrição:</strong> {event.description}</p>{/if}
 				</Card.Content>
 			{/if}
-			<Card.Footer>
-				<form method="POST" action="?/delete" use:enhance>
-					<input type="hidden" name="eventId" value={event.id} />
-					<Button type="submit" variant="outline">Excluir</Button>
-				</form>
-			</Card.Footer>
+			{#if event.status !== 'deleted'}
+				<Card.Footer>
+					<form method="POST" action="?/delete" use:enhance>
+						<input type="hidden" name="eventId" value={event.id} />
+						<Button type="submit" variant="outline">Excluir</Button>
+					</form>
+				</Card.Footer>
+			{/if}
 		</Card.Root>
 	{/each}
 </div>

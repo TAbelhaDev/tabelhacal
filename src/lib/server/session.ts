@@ -1,4 +1,4 @@
-// Sessões via cookie → user_id em KV (sem Better Auth — ver STACK.md).
+// Sessões via cookie → user_id em KV (sem Better Auth).
 // Chave prefixada com "session:" porque o mesmo namespace KV (SESSIONS) também
 // guarda drafts de onboarding e estados de OAuth (ver onboarding-draft.ts e
 // oauth-state.ts) — o prefixo evita colisão entre esses três usos.

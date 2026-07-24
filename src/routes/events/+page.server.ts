@@ -3,10 +3,11 @@ import { setFlash } from 'sveltekit-flash-message/server';
 import type { Actions, PageServerLoad } from './$types';
 import { eq, desc } from 'drizzle-orm';
 import { getDb } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
+import { events, users } from '$lib/server/db/schema';
 import { getUserAccessToken } from '$lib/server/google/tokens';
 import { deleteCalendarEvent } from '$lib/server/google/calendar';
 import { ToastType } from '$lib/enums/toast-type';
+import { parseReminderOffsets } from '$lib/server/push/reminders';
 
 export const load: PageServerLoad = async ({ locals, platform }) => {
 	if (!locals.userId) redirect(303, '/onboarding/ai');
@@ -18,9 +19,15 @@ export const load: PageServerLoad = async ({ locals, platform }) => {
 		.where(eq(events.userId, locals.userId))
 		.orderBy(desc(events.startAt));
 
-	// Chave pública VAPID — não é segredo, precisa ir pro client pra
-	// pushManager.subscribe(). Ver src/lib/PushSubscribe.svelte.
-	return { events: userEvents, vapidPublicKey: platform!.env.VAPID_PUBLIC_KEY };
+	const [user] = await db.select().from(users).where(eq(users.id, locals.userId));
+
+	return {
+		events: userEvents,
+		// Chave pública VAPID — não é segredo, precisa ir pro client pra
+		// pushManager.subscribe(). Ver src/lib/PushSubscribe.svelte.
+		vapidPublicKey: platform!.env.VAPID_PUBLIC_KEY,
+		reminderOffsetsMinutes: parseReminderOffsets(user?.reminderOffsetsMinutes ?? '[]')
+	};
 };
 
 export const actions: Actions = {
@@ -38,8 +45,10 @@ export const actions: Actions = {
 
 		try {
 			const accessToken = await getUserAccessToken(db, platform!.env.MASTER_KEY, locals.userId);
-			await deleteCalendarEvent(accessToken, existing.googleEventId);
-			await db.delete(events).where(eq(events.id, eventId));
+			await deleteCalendarEvent(accessToken, existing.googleEventId, existing.calendarId);
+			// Não remove a linha — o Histórico continua mostrando o evento,
+			// marcado como apagado. Ver README "Histórico".
+			await db.update(events).set({ status: 'deleted' }).where(eq(events.id, eventId));
 		} catch {
 			setFlash(
 				{ type: ToastType.error, message: 'Falha ao excluir o evento. Tente novamente.' },
