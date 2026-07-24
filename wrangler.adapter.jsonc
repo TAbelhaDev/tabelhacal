@@ -1,0 +1,26 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Config "interna", usada só por @sveltejs/adapter-cloudflare em build time
+	// (ver adapter({ config: 'wrangler.adapter.jsonc' }) em vite.config.ts) —
+	// NÃO é a config real do Worker (essa é wrangler.jsonc).
+	//
+	// Motivo de existir: a versão instalada do adapter lê `main` da config que
+	// recebe e escreve o `_worker.js` que gera *diretamente nesse caminho*
+	// (rimraf + write), em vez de sempre usar o default
+	// `.svelte-kit/cloudflare/_worker.js`. Se apontássemos o adapter pra
+	// wrangler.jsonc real (cujo `main` é `worker/entry.js`, o wrapper que
+	// adiciona o handler `scheduled` — ver worker/entry.js), o adapter
+	// sobrescreveria o wrapper com o worker gerado por ele, apagando o
+	// `scheduled` a cada build.
+	//
+	// Essa config força o adapter a continuar escrevendo no local default,
+	// que é exatamente o arquivo que worker/entry.js importa.
+	"name": "gosplan",
+	"compatibility_date": "2026-07-21",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	}
+}

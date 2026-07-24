@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "wrangler types --check && vite build",
-		"preview": "wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
+		"preview": "wrangler dev worker/entry.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "wrangler types --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -60,6 +60,7 @@
 		"wrangler": "^4.97.0"
 	},
 	"dependencies": {
+		"@block65/webcrypto-web-push": "^1.0.2",
 		"sveltekit-flash-message": "^2.4.6"
 	}
 }

@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
+	import PushSubscribe from '$lib/PushSubscribe.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -21,6 +22,8 @@
 		<h1 class="text-xl font-semibold">Seus eventos</h1>
 		<Button href="/chat">Novo evento</Button>
 	</div>
+
+	<PushSubscribe vapidPublicKey={data.vapidPublicKey} />
 
 	{#if data.events.length === 0}
 		<p class="text-sm text-muted-foreground">Nenhum evento criado ainda.</p>

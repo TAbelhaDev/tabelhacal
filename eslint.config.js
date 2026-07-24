@@ -41,5 +41,15 @@ export default defineConfig(
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}
+	},
+	{
+		// worker/entry.js referencia svelte-kit-worker.d.ts via triple-slash de
+		// propósito — é a única forma de o TS aplicar uma ambient module
+		// declaration (fallback de resolução pro import relativo do _worker.js
+		// gerado em build time) sem trocar `import` por `require` dinâmico.
+		files: ['worker/**'],
+		rules: {
+			'@typescript-eslint/triple-slash-reference': 'off'
+		}
 	}
 );

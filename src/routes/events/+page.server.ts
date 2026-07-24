@@ -18,7 +18,9 @@ export const load: PageServerLoad = async ({ locals, platform }) => {
 		.where(eq(events.userId, locals.userId))
 		.orderBy(desc(events.startAt));
 
-	return { events: userEvents };
+	// Chave pública VAPID — não é segredo, precisa ir pro client pra
+	// pushManager.subscribe(). Ver src/lib/PushSubscribe.svelte.
+	return { events: userEvents, vapidPublicKey: platform!.env.VAPID_PUBLIC_KEY };
 };
 
 export const actions: Actions = {

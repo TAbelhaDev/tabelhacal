@@ -5,7 +5,15 @@
 	// nodejs_compat: exigido pro WebCrypto/Node usado na envelope encryption
 	// (ver ESCOPO.md §5); cobre também o AsyncLocalStorage que o SvelteKit precisa.
 	"compatibility_flags": ["nodejs_compat"],
-	"main": ".svelte-kit/cloudflare/_worker.js",
+	// main aponta pro wrapper (não direto pro _worker.js do adapter) — ver
+	// worker/entry.js. É ele quem adiciona o handler `scheduled` (Cron Trigger)
+	// dos lembretes proativos por cima do `fetch` gerado pelo SvelteKit.
+	"main": "worker/entry.js",
+	// Alias pro esbuild do wrangler resolver `$lib/...` dentro de worker/entry.js
+	// (mesmo alias que o Vite já resolve pro resto do app via tsconfig "paths").
+	"alias": {
+		"$lib": "./src/lib"
+	},
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
@@ -13,7 +21,19 @@
 	"workers_dev": true,
 	"preview_urls": true,
 	"vars": {
-		"ORIGIN": "https://gosplan.ianptkcs-023.workers.dev"
+		"ORIGIN": "https://gosplan.ianptkcs-023.workers.dev",
+		// Chave pública VAPID — não é segredo, vai no client (subscribe()) e
+		// é usada aqui só pra virar tipo em worker-configuration.d.ts.
+		"VAPID_PUBLIC_KEY": "BEEwR9B8aMZVJMsEVMsawOI9wmvpLupg7CEOFj2FBaCeEW9eLLnfjDHidioYyHtunT-hPCbvZXhNf_QCHXU0tDA",
+		// Subject exigido pelo protocolo VAPID (RFC 8292) — precisa ser
+		// "mailto:" ou uma URL http(s). VAPID_PRIVATE_KEY é o segredo real:
+		// ver .env.example e o mesmo padrão de MASTER_KEY (não entra aqui).
+		"VAPID_SUBJECT": "https://gosplan.ianptkcs-023.workers.dev"
+	},
+	// Verifica eventos que começam dentro da janela de lembrete a cada 5min —
+	// ver src/lib/server/push/reminders.ts (REMINDER_LEAD_TIME_MS).
+	"triggers": {
+		"crons": ["*/5 * * * *"]
 	},
 	"d1_databases": [
 		{

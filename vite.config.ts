@@ -13,7 +13,10 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter(),
+			// config: 'wrangler.adapter.jsonc' — não a wrangler.jsonc real. Ver
+			// comentário nesse arquivo: evita que o adapter sobrescreva
+			// worker/entry.js (o wrapper que adiciona o handler `scheduled`).
+			adapter: adapter({ config: 'wrangler.adapter.jsonc' }),
 			typescript: {
 				config: (config) => {
 					config.include.push('../drizzle.config.ts');
@@ -51,7 +54,13 @@ export default defineConfig({
 							url.pathname.startsWith('/api') || url.pathname.startsWith('/auth'),
 						handler: 'NetworkOnly'
 					}
-				]
+				],
+				// generateSW não permite código custom direto no SW gerado, mas
+				// aceita importScripts — usado aqui pro listener de `push`
+				// (lembretes proativos, ver static/sw-push.js e
+				// src/lib/server/push/reminders.ts). Trocar pra `injectManifest`
+				// não foi necessário.
+				importScripts: ['sw-push.js']
 			}
 		})
 	],

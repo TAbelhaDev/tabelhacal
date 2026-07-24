@@ -65,5 +65,27 @@ export const events = sqliteTable('events', {
 	description: text('description'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
+		.$defaultFn(() => new Date()),
+	// Marca quando o lembrete proativo (push, ~30min antes de startAt) foi
+	// disparado — null = ainda não notificado. Ver ESCOPO.md "lembretes proativos"
+	// e src/lib/server/push/reminders.ts.
+	reminderSentAt: integer('reminder_sent_at', { mode: 'timestamp' })
+});
+
+// Inscrições de Web Push (PushManager.subscribe()) — uma por dispositivo/navegador
+// do usuário. endpoint é único pois cada subscription do browser aponta pra uma
+// URL própria do push service (FCM, Mozilla autopush etc).
+export const pushSubscriptions = sqliteTable('push_subscriptions', {
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	userId: text('user_id')
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	endpoint: text('endpoint').notNull().unique(),
+	p256dh: text('p256dh').notNull(),
+	auth: text('auth').notNull(),
+	createdAt: integer('created_at', { mode: 'timestamp' })
+		.notNull()
 		.$defaultFn(() => new Date())
 });
