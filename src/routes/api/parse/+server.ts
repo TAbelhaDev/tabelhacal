@@ -4,8 +4,16 @@ import { eq } from 'drizzle-orm';
 import { getDb } from '$lib/server/db';
 import { aiCredentials, users } from '$lib/server/db/schema';
 import { decryptSecret } from '$lib/server/crypto';
-import { parseEventFromText } from '$lib/server/ai/parse';
+import { parseCommandFromText } from '$lib/server/ai/parse';
 import type { AiProvider } from '$lib/ai-providers';
+import { getUserAccessToken } from '$lib/server/google/tokens';
+import {
+	listCalendars,
+	listCalendarEvents,
+	type CalendarEventSummary
+} from '$lib/server/google/calendar';
+
+const LOOKAHEAD_DAYS = 30;
 
 export const POST: RequestHandler = async ({ request, locals, platform }) => {
 	if (!locals.userId) error(401, 'Não autenticado.');
@@ -30,14 +38,37 @@ export const POST: RequestHandler = async ({ request, locals, platform }) => {
 		nonce: credentials.nonce
 	});
 
-	const draft = await parseEventFromText({
+	const now = new Date();
+	const timeMax = new Date(now.getTime() + LOOKAHEAD_DAYS * 24 * 60 * 60 * 1000);
+
+	// Contexto de eventos existentes pra IA resolver referências em linguagem
+	// natural (ex: "a reunião de amanhã com o João") e responder ao comando `list`.
+	// Busca em todas as agendas conectadas, não só primary (ver ESCOPO.md).
+	// Se o usuário ainda não conectou o Google Calendar, segue sem contexto.
+	let calendarEvents: CalendarEventSummary[];
+	try {
+		const accessToken = await getUserAccessToken(db, masterKey, locals.userId);
+		const calendars = await listCalendars(accessToken);
+		const calendarIds = calendars.length > 0 ? calendars.map((c) => c.id) : ['primary'];
+		calendarEvents = await listCalendarEvents(
+			accessToken,
+			now.toISOString(),
+			timeMax.toISOString(),
+			calendarIds
+		);
+	} catch {
+		calendarEvents = [];
+	}
+
+	const command = await parseCommandFromText({
 		provider: credentials.provider as AiProvider,
 		model: credentials.model,
 		apiKey,
 		text,
-		now: new Date().toISOString(),
-		timezone: user.timezone
+		now: now.toISOString(),
+		timezone: user.timezone,
+		calendarEvents
 	});
 
-	return json(draft);
+	return json(command);
 };
