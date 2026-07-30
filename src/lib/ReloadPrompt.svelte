@@ -5,12 +5,12 @@
 	const { needRefresh, offlineReady, updateServiceWorker } = useRegisterSW();
 
 	$effect(() => {
-		if ($offlineReady) toast.success('NDRC está pronto para uso offline.');
+		if ($offlineReady) toast.success('TabelaCal está pronto para uso offline.');
 	});
 
 	$effect(() => {
 		if ($needRefresh) {
-			toast('Nova versão do NDRC disponível.', {
+			toast('Nova versão do TabelaCal disponível.', {
 				duration: Number.POSITIVE_INFINITY,
 				action: {
 					label: 'Atualizar',

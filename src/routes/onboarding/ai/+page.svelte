@@ -10,8 +10,8 @@
 
 	let { form }: { form: ActionData } = $props();
 
-	let provider = $state<AiProvider>('anthropic');
-	let model = $state<string>(AI_PROVIDERS.anthropic.models[0]);
+	let provider = $state<AiProvider>('deepseek');
+	let model = $state<string>(AI_PROVIDERS.deepseek.models[0]);
 
 	$effect(() => {
 		const models: readonly string[] = AI_PROVIDERS[provider].models;
@@ -24,7 +24,7 @@
 		<Card.Header>
 			<Card.Title>Configurar IA</Card.Title>
 			<Card.Description>
-				Passo 1 de 2 — cole sua própria API key e escolha o modelo que o NDRC vai usar pra
+				Passo 1 de 2 — cole sua própria API key e escolha o modelo que o TabelaCal vai usar pra
 				interpretar seus pedidos de evento.
 			</Card.Description>
 		</Card.Header>

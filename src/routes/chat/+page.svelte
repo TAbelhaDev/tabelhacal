@@ -203,7 +203,7 @@
 	<NavHeader />
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>NDRC</Card.Title>
+			<Card.Title>TabelaCal</Card.Title>
 			<Card.Description
 				>Diga o que quer fazer no seu calendário, em linguagem natural.</Card.Description
 			>
