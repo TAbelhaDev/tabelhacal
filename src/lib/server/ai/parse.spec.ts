@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { parseCommandFromText, type Command } from './parse';
-import type { CalendarEventSummary } from '$lib/server/google/calendar';
+import type { CalendarEventSummary, CalendarInfo } from '$lib/server/google/calendar';
+
+const calendars: CalendarInfo[] = [
+	{ id: 'primary', summary: 'ian@example.com' },
+	{ id: 'trabalho@group.calendar.google.com', summary: 'Trabalho' }
+];
 
 const calendarEvents: CalendarEventSummary[] = [
 	{
@@ -34,6 +39,7 @@ function baseInput(overrides: Partial<Parameters<typeof parseCommandFromText>[0]
 		now: '2026-07-23T12:00:00-03:00',
 		timezone: 'America/Sao_Paulo',
 		calendarEvents,
+		calendars,
 		...overrides
 	};
 }
@@ -79,7 +85,44 @@ describe('parseCommandFromText (anthropic)', () => {
 				endAt: '2026-07-24T16:00:00-03:00',
 				location: null,
 				description: null,
-				recurrence: null
+				recurrence: null,
+				calendarId: null
+			}
+		});
+	});
+
+	it('maps a create_event tool call with an explicit calendar_id to a create command targeting that calendar', async () => {
+		mockFetchOnce({
+			content: [
+				{
+					type: 'tool_use',
+					name: 'create_event',
+					input: {
+						title: 'Reunião de equipe',
+						start_at: '2026-07-24T15:00:00-03:00',
+						end_at: '2026-07-24T16:00:00-03:00',
+						location: null,
+						description: null,
+						calendar_id: 'trabalho@group.calendar.google.com'
+					}
+				}
+			]
+		});
+
+		const command = await parseCommandFromText(
+			baseInput({ text: 'reunião de equipe quinta às 15h no calendário de trabalho' })
+		);
+
+		expect(command).toEqual<Command>({
+			type: 'create',
+			draft: {
+				title: 'Reunião de equipe',
+				startAt: '2026-07-24T15:00:00-03:00',
+				endAt: '2026-07-24T16:00:00-03:00',
+				location: null,
+				description: null,
+				recurrence: null,
+				calendarId: 'trabalho@group.calendar.google.com'
 			}
 		});
 	});
@@ -114,7 +157,8 @@ describe('parseCommandFromText (anthropic)', () => {
 				endAt: '2026-07-27T09:30:00-03:00',
 				location: null,
 				description: null,
-				recurrence: ['RRULE:FREQ=WEEKLY;BYDAY=MO;UNTIL=20260831T000000Z']
+				recurrence: ['RRULE:FREQ=WEEKLY;BYDAY=MO;UNTIL=20260831T000000Z'],
+				calendarId: null
 			}
 		});
 	});

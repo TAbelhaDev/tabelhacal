@@ -10,7 +10,8 @@ import { getUserAccessToken } from '$lib/server/google/tokens';
 import {
 	listCalendars,
 	listCalendarEvents,
-	type CalendarEventSummary
+	type CalendarEventSummary,
+	type CalendarInfo
 } from '$lib/server/google/calendar';
 
 const LOOKAHEAD_DAYS = 30;
@@ -44,11 +45,14 @@ export const POST: RequestHandler = async ({ request, locals, platform }) => {
 	// Contexto de eventos existentes pra IA resolver referências em linguagem
 	// natural (ex: "a reunião de amanhã com o João") e responder ao comando `list`.
 	// Busca em todas as agendas conectadas, não só primary (ver ESCOPO.md).
+	// `calendars` também vai pro prompt sozinho (não só via calendarEvents), pra
+	// a IA poder escolher agendas de destino que ainda não têm evento nenhum.
 	// Se o usuário ainda não conectou o Google Calendar, segue sem contexto.
 	let calendarEvents: CalendarEventSummary[];
+	let calendars: CalendarInfo[];
 	try {
 		const accessToken = await getUserAccessToken(db, masterKey, locals.userId);
-		const calendars = await listCalendars(accessToken);
+		calendars = await listCalendars(accessToken);
 		const calendarIds = calendars.length > 0 ? calendars.map((c) => c.id) : ['primary'];
 		calendarEvents = await listCalendarEvents(
 			accessToken,
@@ -58,6 +62,7 @@ export const POST: RequestHandler = async ({ request, locals, platform }) => {
 		);
 	} catch {
 		calendarEvents = [];
+		calendars = [];
 	}
 
 	const command = await parseCommandFromText({
@@ -67,7 +72,8 @@ export const POST: RequestHandler = async ({ request, locals, platform }) => {
 		text,
 		now: now.toISOString(),
 		timezone: user.timezone,
-		calendarEvents
+		calendarEvents,
+		calendars
 	});
 
 	return json(command);

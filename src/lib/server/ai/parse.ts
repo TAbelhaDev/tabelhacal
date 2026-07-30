@@ -1,5 +1,5 @@
 import type { AiProvider } from '$lib/ai-providers';
-import type { CalendarEventSummary } from '$lib/server/google/calendar';
+import type { CalendarEventSummary, CalendarInfo } from '$lib/server/google/calendar';
 
 export interface EventDraft {
 	title: string;
@@ -9,6 +9,10 @@ export interface EventDraft {
 	description: string | null;
 	// RRULE(s) (RFC 5545), ex: ["RRULE:FREQ=WEEKLY;BYDAY=MO"]. null se não repetir.
 	recurrence: string[] | null;
+	// Agenda de destino (id de uma das `calendars` do contexto). null = agenda
+	// padrão do usuário ('primary') — a IA só preenche quando o pedido menciona
+	// uma agenda específica (ex: "no calendário de trabalho").
+	calendarId: string | null;
 }
 
 // Pra modify/delete de um evento recorrente: 'instance' afeta só a ocorrência
@@ -54,6 +58,10 @@ interface ParseCommandInput {
 	now: string; // ISO 8601
 	timezone: string;
 	calendarEvents: CalendarEventSummary[];
+	// Agendas conectadas do usuário (id + nome) — permite à IA escolher uma
+	// agenda de destino pro create_event mesmo quando ela ainda não tem
+	// eventos (e por isso não apareceria em calendarEvents).
+	calendars: CalendarInfo[];
 }
 
 const RECURRENCE_PROPERTY = {
@@ -78,7 +86,12 @@ const CREATE_EVENT_SCHEMA = {
 		end_at: { type: 'string', description: 'Data/hora de término em ISO 8601, com timezone' },
 		location: { type: ['string', 'null'] },
 		description: { type: ['string', 'null'] },
-		recurrence: RECURRENCE_PROPERTY
+		recurrence: RECURRENCE_PROPERTY,
+		calendar_id: {
+			type: 'string',
+			description:
+				'Id de uma das agendas conectadas (campo id= na lista de agendas do contexto) onde criar o evento. Omita se o usuário não mencionar uma agenda específica — nesse caso a agenda padrão é usada.'
+		}
 	},
 	required: ['title', 'start_at', 'end_at', 'location', 'description']
 };
@@ -198,17 +211,24 @@ function formatCalendarContext(calendarEvents: CalendarEventSummary[]): string {
 		.join('\n');
 }
 
+function formatCalendarList(calendars: CalendarInfo[]): string {
+	if (calendars.length === 0) return 'Só a agenda padrão (id=primary).';
+	return calendars.map((c) => `- id=${c.id} | ${c.summary}`).join('\n');
+}
+
 function systemPrompt(
 	now: string,
 	timezone: string,
-	calendarEvents: CalendarEventSummary[]
+	calendarEvents: CalendarEventSummary[],
+	calendars: CalendarInfo[]
 ): string {
 	return (
 		`Você traduz pedidos em linguagem natural (português) sobre calendário para um comando estruturado. ` +
 		`Data/hora atual: ${now}. Timezone do usuário: ${timezone}.\n\n` +
+		`Agendas conectadas do usuário:\n${formatCalendarList(calendars)}\n\n` +
 		`Eventos existentes do usuário em todas as agendas conectadas (próximos 30 dias), cada um com o id da agenda (campo agenda=) e se é parte de uma série recorrente:\n${formatCalendarContext(calendarEvents)}\n\n` +
 		`Chame exatamente UMA ferramenta, de acordo com a intenção do usuário:\n` +
-		`- create_event: criar um novo evento. Use "recurrence" (RRULE) se o usuário pedir algo repetitivo (ex: "toda segunda às 9h até o fim do mês").\n` +
+		`- create_event: criar um novo evento. Use "recurrence" (RRULE) se o usuário pedir algo repetitivo (ex: "toda segunda às 9h até o fim do mês"). Use "calendar_id" só se o usuário mencionar uma agenda específica (ex: "no calendário de trabalho") — escolha o id correspondente na lista de agendas acima; sem menção, omita.\n` +
 		`- modify_event: alterar um evento já existente (use um "id" da lista acima; em changes inclua só os campos que mudam; use "scope": "series" só se o usuário deixar claro que quer mudar a série inteira, não só uma ocorrência).\n` +
 		`- delete_event: apagar um evento já existente (mesma lógica de "scope" do modify_event).\n` +
 		`- respond_event: aceitar/recusar/talvez um convite pra um evento já existente.\n` +
@@ -235,7 +255,7 @@ async function parseWithAnthropic(input: ParseCommandInput): Promise<Command> {
 		body: JSON.stringify({
 			model: input.model,
 			max_tokens: 1024,
-			system: systemPrompt(input.now, input.timezone, input.calendarEvents),
+			system: systemPrompt(input.now, input.timezone, input.calendarEvents, input.calendars),
 			messages: [{ role: 'user', content: input.text }],
 			tools: COMMAND_TOOLS.map((tool) => ({
 				name: tool.name,
@@ -265,7 +285,10 @@ async function parseWithOpenAI(input: ParseCommandInput): Promise<Command> {
 		body: JSON.stringify({
 			model: input.model,
 			messages: [
-				{ role: 'system', content: systemPrompt(input.now, input.timezone, input.calendarEvents) },
+				{
+					role: 'system',
+					content: systemPrompt(input.now, input.timezone, input.calendarEvents, input.calendars)
+				},
 				{ role: 'user', content: input.text }
 			],
 			tools: COMMAND_TOOLS.map((tool) => ({
@@ -374,6 +397,7 @@ function toEventDraft(input: unknown): EventDraft {
 		location: string | null;
 		description: string | null;
 		recurrence?: string[];
+		calendar_id?: string;
 	};
 	return {
 		title: parsed.title,
@@ -381,7 +405,8 @@ function toEventDraft(input: unknown): EventDraft {
 		endAt: parsed.end_at,
 		location: parsed.location ?? null,
 		description: parsed.description ?? null,
-		recurrence: parsed.recurrence && parsed.recurrence.length > 0 ? parsed.recurrence : null
+		recurrence: parsed.recurrence && parsed.recurrence.length > 0 ? parsed.recurrence : null,
+		calendarId: parsed.calendar_id ?? null
 	};
 }
 

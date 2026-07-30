@@ -87,22 +87,27 @@ export const POST: RequestHandler = async ({ request, locals, platform }) => {
 		case 'create': {
 			const { draft } = command;
 			if (!draft?.title || !draft.startAt || !draft.endAt) error(400, 'Evento incompleto.');
+			const calendarId = draft.calendarId ?? 'primary';
 
 			const accessToken = await getUserAccessToken(db, masterKey, locals.userId);
-			const calendarEvent = await createCalendarEvent(accessToken, {
-				title: draft.title,
-				startAt: draft.startAt,
-				endAt: draft.endAt,
-				timezone: user.timezone,
-				location: draft.location,
-				description: draft.description,
-				recurrence: draft.recurrence
-			});
+			const calendarEvent = await createCalendarEvent(
+				accessToken,
+				{
+					title: draft.title,
+					startAt: draft.startAt,
+					endAt: draft.endAt,
+					timezone: user.timezone,
+					location: draft.location,
+					description: draft.description,
+					recurrence: draft.recurrence
+				},
+				calendarId
+			);
 
 			const saved = await upsertLocalEvent(
 				db,
 				user.id,
-				'primary',
+				calendarId,
 				calendarEvent.id,
 				{
 					title: draft.title,

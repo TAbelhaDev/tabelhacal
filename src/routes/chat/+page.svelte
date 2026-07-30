@@ -13,6 +13,7 @@
 		location: string | null;
 		description: string | null;
 		recurrence: string[] | null;
+		calendarId: string | null;
 	}
 
 	interface CalendarEventSummary {
@@ -237,6 +238,10 @@
 				{#if command.draft.recurrence}<p>
 						<strong>Repete:</strong>
 						{command.draft.recurrence.join(', ')}
+					</p>{/if}
+				{#if command.draft.calendarId}<p>
+						<strong>Agenda:</strong>
+						{command.draft.calendarId}
 					</p>{/if}
 			</Card.Content>
 			<Card.Footer class="gap-2">
