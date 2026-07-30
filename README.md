@@ -70,6 +70,8 @@ Copie `.env.example` pra `.dev.vars` e preencha as variáveis antes de rodar: `M
 
 ## Licença
 
-AGPL-3.0 — se alguém pegar esse código e rodar uma versão modificada como serviço hospedado, é obrigado a publicar as mudanças. Ver `LICENSE`.
+[PolyForm Noncommercial License 1.0.0](LICENSE) — uso livre pra fins não
+comerciais (estudo, hobby, contribuição). Uso comercial requer permissão
+do autor.
 
 Quer contribuir? Dá uma olhada em `CONTRIBUTING.md`.
