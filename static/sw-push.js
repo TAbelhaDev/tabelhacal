@@ -18,7 +18,7 @@ self.addEventListener('push', (event) => {
 		}
 	}
 
-	const title = payload.title || 'Gosplan';
+	const title = payload.title || 'NDRC';
 	const url = payload.url || '/events';
 
 	event.waitUntil(

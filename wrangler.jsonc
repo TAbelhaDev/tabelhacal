@@ -1,6 +1,6 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "gosplan",
+	"name": "ndrc",
 	"compatibility_date": "2026-07-21",
 	// nodejs_compat: exigido pro WebCrypto/Node usado na envelope encryption
 	// (ver ESCOPO.md §5); cobre também o AsyncLocalStorage que o SvelteKit precisa.
@@ -21,14 +21,14 @@
 	"workers_dev": true,
 	"preview_urls": true,
 	"vars": {
-		"ORIGIN": "https://gosplan.ianptkcs-023.workers.dev",
+		"ORIGIN": "https://ndrc.ianptkcs-023.workers.dev",
 		// Chave pública VAPID — não é segredo, vai no client (subscribe()) e
 		// é usada aqui só pra virar tipo em worker-configuration.d.ts.
 		"VAPID_PUBLIC_KEY": "BEEwR9B8aMZVJMsEVMsawOI9wmvpLupg7CEOFj2FBaCeEW9eLLnfjDHidioYyHtunT-hPCbvZXhNf_QCHXU0tDA",
 		// Subject exigido pelo protocolo VAPID (RFC 8292) — precisa ser
 		// "mailto:" ou uma URL http(s). VAPID_PRIVATE_KEY é o segredo real:
 		// ver .env.example e o mesmo padrão de MASTER_KEY (não entra aqui).
-		"VAPID_SUBJECT": "https://gosplan.ianptkcs-023.workers.dev"
+		"VAPID_SUBJECT": "https://ndrc.ianptkcs-023.workers.dev"
 	},
 	// Verifica eventos que começam dentro da janela de lembrete a cada 5min —
 	// ver src/lib/server/push/reminders.ts (REMINDER_LEAD_TIME_MS).
@@ -38,8 +38,8 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "gosplan-db",
-			"database_id": "3060ce9d-805a-4499-8f4f-9d1bfc502fc4",
+			"database_name": "ndrc-db",
+			"database_id": "99ced037-55ea-4279-9f8f-fa68b3bcad23",
 			"migrations_dir": "drizzle"
 		}
 	],

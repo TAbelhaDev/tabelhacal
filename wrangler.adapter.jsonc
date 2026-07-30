@@ -15,7 +15,7 @@
 	//
 	// Essa config força o adapter a continuar escrevendo no local default,
 	// que é exatamente o arquivo que worker/entry.js importa.
-	"name": "gosplan",
+	"name": "ndrc",
 	"compatibility_date": "2026-07-21",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": ".svelte-kit/cloudflare/_worker.js",

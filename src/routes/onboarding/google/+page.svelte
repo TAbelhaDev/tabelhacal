@@ -17,9 +17,8 @@
 		<Card.Header>
 			<Card.Title>Conectar Google Calendar</Card.Title>
 			<Card.Description>
-				Passo 2 de 2 — o Gosplan não tem um app do Google compartilhado entre usuários. Você cria o
-				seu próprio projeto no Google Cloud (gratuito, leva uns 2 minutos) e cola as credenciais
-				aqui.
+				Passo 2 de 2 — o NDRC não tem um app do Google compartilhado entre usuários. Você cria o seu
+				próprio projeto no Google Cloud (gratuito, leva uns 2 minutos) e cola as credenciais aqui.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-6">

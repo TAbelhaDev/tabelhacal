@@ -93,7 +93,7 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 		await createSession(kv, cookies, user.id);
 		redirect(
 			'/chat',
-			{ type: ToastType.success, message: 'Conta conectada! Bem-vindo ao Gosplan.' },
+			{ type: ToastType.success, message: 'Conta conectada! Bem-vindo ao NDRC.' },
 			cookies
 		);
 	}

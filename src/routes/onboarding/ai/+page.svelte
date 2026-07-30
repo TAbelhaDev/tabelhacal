@@ -24,7 +24,7 @@
 		<Card.Header>
 			<Card.Title>Configurar IA</Card.Title>
 			<Card.Description>
-				Passo 1 de 2 — cole sua própria API key e escolha o modelo que o Gosplan vai usar pra
+				Passo 1 de 2 — cole sua própria API key e escolha o modelo que o NDRC vai usar pra
 				interpretar seus pedidos de evento.
 			</Card.Description>
 		</Card.Header>

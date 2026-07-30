@@ -23,7 +23,7 @@ type EventFields = {
 
 // Upsert no cache/histórico local: qualquer evento tocado por um comando
 // (create/modify/delete/respond) fica registrado, mesmo que não tenha sido
-// criado pelo Gosplan. `delete` nunca remove a linha, só marca o status —
+// criado pelo NDRC. `delete` nunca remove a linha, só marca o status —
 // ver README "Histórico".
 async function upsertLocalEvent(
 	db: ReturnType<typeof getDb>,

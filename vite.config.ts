@@ -27,9 +27,9 @@ export default defineConfig({
 			strategies: 'generateSW',
 			registerType: 'prompt',
 			manifest: {
-				name: 'Gosplan',
-				short_name: 'Gosplan',
-				description: 'Agenda com IA — fale e o Gosplan cria o evento no seu Google Calendar.',
+				name: 'NDRC',
+				short_name: 'NDRC',
+				description: 'Agenda com IA — fale e o NDRC cria o evento no seu Google Calendar.',
 				theme_color: '#18181b',
 				background_color: '#18181b',
 				display: 'standalone',

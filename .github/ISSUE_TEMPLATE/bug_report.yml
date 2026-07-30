@@ -1,5 +1,5 @@
 name: Bug report
-description: Reportar um comportamento incorreto no Gosplan
+description: Reportar um comportamento incorreto no NDRC
 labels: ['bug']
 body:
   - type: textarea

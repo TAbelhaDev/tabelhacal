@@ -1,4 +1,4 @@
-# Contribuindo com o Gosplan
+# Contribuindo com o NDRC
 
 Obrigado pelo interesse. Antes de abrir um PR de código, dá uma olhada em
 `ESCOPO.md` e `README.md` pra entender as decisões já tomadas (hospedagem,

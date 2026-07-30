@@ -200,7 +200,7 @@
 <div class="mx-auto flex min-h-svh max-w-lg flex-col justify-center gap-6 p-6">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>Gosplan</Card.Title>
+			<Card.Title>NDRC</Card.Title>
 			<Card.Description
 				>Diga o que quer fazer no seu calendário, em linguagem natural.</Card.Description
 			>
