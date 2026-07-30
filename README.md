@@ -70,8 +70,9 @@ Copie `.env.example` pra `.dev.vars` e preencha as variáveis antes de rodar: `M
 
 ## Licença
 
-[PolyForm Noncommercial License 1.0.0](LICENSE) — uso livre pra fins não
-comerciais (estudo, hobby, contribuição). Uso comercial requer permissão
-do autor.
+[AGPL-3.0](LICENSE) — copyleft forte: você pode usar, modificar e até
+hospedar o NDRC comercialmente, mas qualquer versão modificada, inclusive
+rodando como serviço via rede (SaaS), precisa continuar open source sob a
+mesma licença.
 
 Quer contribuir? Dá uma olhada em `CONTRIBUTING.md`.
