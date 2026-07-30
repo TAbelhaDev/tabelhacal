@@ -5,6 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import * as Card from '$lib/components/ui/card';
+	import NavHeader from '$lib/NavHeader.svelte';
 
 	interface EventDraft {
 		title: string;
@@ -198,7 +199,8 @@
 	}
 </script>
 
-<div class="mx-auto flex min-h-svh max-w-lg flex-col justify-center gap-6 p-6">
+<div class="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
+	<NavHeader />
 	<Card.Root>
 		<Card.Header>
 			<Card.Title>NDRC</Card.Title>

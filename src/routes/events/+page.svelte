@@ -4,6 +4,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import PushSubscribe from '$lib/PushSubscribe.svelte';
 	import ReminderSettings from '$lib/ReminderSettings.svelte';
+	import NavHeader from '$lib/NavHeader.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -19,6 +20,7 @@
 </script>
 
 <div class="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
+	<NavHeader />
 	<div class="flex items-center justify-between">
 		<h1 class="text-xl font-semibold">Seus eventos</h1>
 		<Button href="/chat">Novo evento</Button>
