@@ -28,17 +28,27 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 	if (state.mode === 'onboarding') {
 		const draftId = state.draftId;
 		const draft = await readDraft(kv, draftId);
+		if (!draft.aiKeyEncrypted || !draft.aiKeyNonce || !draft.aiProvider || !draft.aiModel) {
+			redirect(
+				'/onboarding/ai',
+				{ type: ToastType.error, message: 'Rascunho expirou. Configure a IA de novo.' },
+				cookies
+			);
+		}
 		if (
-			!draft.aiKeyEncrypted ||
-			!draft.aiKeyNonce ||
-			!draft.aiProvider ||
-			!draft.aiModel ||
 			!draft.googleClientIdEncrypted ||
 			!draft.googleClientIdNonce ||
 			!draft.googleClientSecretEncrypted ||
 			!draft.googleClientSecretNonce
 		) {
-			error(400, 'Rascunho de onboarding incompleto. Reinicie o cadastro.');
+			redirect(
+				'/onboarding/google',
+				{
+					type: ToastType.error,
+					message: 'Rascunho expirou. Cole as credenciais do Google de novo.'
+				},
+				cookies
+			);
 		}
 
 		const clientId = await decryptSecret(masterKey, {
@@ -50,11 +60,36 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 			nonce: draft.googleClientSecretNonce
 		});
 
-		const tokens = await exchangeCodeForTokens(clientId, clientSecret, code, redirectUri);
+		let tokens;
+		try {
+			tokens = await exchangeCodeForTokens(clientId, clientSecret, code, redirectUri);
+		} catch {
+			redirect(
+				'/onboarding/google',
+				{
+					type: ToastType.error,
+					message:
+						'Não deu pra conectar com o Google. Confira se o Client ID/Secret estão certos e se a Calendar API está ativada no seu projeto, e tente de novo.'
+				},
+				cookies
+			);
+		}
 		const email = await getUserEmail(tokens.accessToken);
 
 		let user = await findUserByEmail(db, email);
 		if (!user) {
+			if (!tokens.refreshToken) {
+				redirect(
+					'/onboarding/google',
+					{
+						type: ToastType.error,
+						message:
+							'O Google não devolveu permissão de acesso contínuo. Remova o acesso do TabelaCal em myaccount.google.com/permissions e tente conectar de novo.'
+					},
+					cookies
+				);
+			}
+
 			user = await createUser(db, email, draft.timezone ?? 'UTC');
 
 			await db.insert(aiCredentials).values({
@@ -73,12 +108,6 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 				clientSecretNonce: draft.googleClientSecretNonce
 			});
 
-			if (!tokens.refreshToken) {
-				error(
-					400,
-					'Google não retornou refresh token. Remova o acesso do app na sua conta Google e tente de novo.'
-				);
-			}
 			const refreshEncrypted = await encryptSecret(masterKey, tokens.refreshToken);
 			await db.insert(googleTokens).values({
 				userId: user.id,
