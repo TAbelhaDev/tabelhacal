@@ -5,6 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import * as Select from '$lib/components/ui/select';
+	import { Badge } from '$lib/components/ui/badge';
 	import { toast } from 'svelte-sonner';
 
 	let { initialOffsetsMinutes }: { initialOffsetsMinutes: number[] } = $props();
@@ -70,7 +71,7 @@
 	{:else}
 		<div class="flex flex-wrap gap-2">
 			{#each offsets as minutes (minutes)}
-				<span class="flex items-center gap-1 rounded-full bg-secondary px-3 py-1">
+				<Badge variant="secondary" class="gap-1.5 py-1">
 					{formatOffset(minutes)} antes
 					<button
 						type="button"
@@ -81,7 +82,7 @@
 					>
 						×
 					</button>
-				</span>
+				</Badge>
 			{/each}
 		</div>
 	{/if}

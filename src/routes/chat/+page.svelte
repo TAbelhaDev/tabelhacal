@@ -5,7 +5,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import * as Card from '$lib/components/ui/card';
-	import NavHeader from '$lib/NavHeader.svelte';
 
 	interface EventDraft {
 		title: string;
@@ -66,6 +65,12 @@
 	let command = $state<Command | null>(null);
 	let parsing = $state(false);
 	let confirming = $state(false);
+
+	const EXAMPLES = [
+		'almoço com a ana amanhã meio-dia',
+		'move o dentista de quinta pra sexta',
+		'o que eu tenho essa semana?'
+	];
 
 	const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
 		dateStyle: 'short',
@@ -199,11 +204,10 @@
 	}
 </script>
 
-<div class="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
-	<NavHeader />
+<div class="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 p-6">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>TabelaCal</Card.Title>
+			<Card.Title class="font-mono">O que você quer fazer?</Card.Title>
 			<Card.Description
 				>Diga o que quer fazer no seu calendário, em linguagem natural.</Card.Description
 			>
@@ -223,11 +227,27 @@
 		</Card.Content>
 	</Card.Root>
 
+	{#if !command && !parsing}
+		<div class="flex flex-col gap-2 px-1">
+			<p class="font-mono text-xs tracking-widest text-muted-foreground uppercase">Exemplos</p>
+			{#each EXAMPLES as example (example)}
+				<button
+					type="button"
+					onclick={() => (text = example)}
+					class="w-fit font-mono text-sm text-muted-foreground hover:text-foreground"
+				>
+					<span class="text-accent-ink">›</span>
+					{example}
+				</button>
+			{/each}
+		</div>
+	{/if}
+
 	{#if command?.type === 'create'}
 		<Card.Root>
 			<Card.Header>
-				<Card.Title>{command.draft.title}</Card.Title>
-				<Card.Description
+				<Card.Title class="font-mono">{command.draft.title}</Card.Title>
+				<Card.Description class="font-mono text-xs"
 					>{formatRange(command.draft.startAt, command.draft.endAt)}</Card.Description
 				>
 			</Card.Header>
@@ -256,12 +276,19 @@
 	{:else if command?.type === 'modify'}
 		<Card.Root>
 			<Card.Header>
-				<Card.Title>{command.before?.title ?? 'Modificar evento'}</Card.Title>
+				<Card.Title class="font-mono">{command.before?.title ?? 'Modificar evento'}</Card.Title>
 				<Card.Description>Confira as alterações antes de confirmar.</Card.Description>
 			</Card.Header>
-			<Card.Content class="flex flex-col gap-2 text-sm">
+			<Card.Content class="flex flex-col gap-2">
 				{#each diffRows(command) as row (row.label)}
-					<p><strong>{row.label}:</strong> {row.before} → {row.after}</p>
+					<div class="grid grid-cols-[auto_1fr_auto_1fr] items-baseline gap-x-2 text-sm">
+						<span class="font-mono text-xs tracking-wider text-muted-foreground uppercase"
+							>{row.label}</span
+						>
+						<span class="text-muted-foreground line-through">{row.before}</span>
+						<span class="text-accent-ink">→</span>
+						<span class="font-medium text-foreground">{row.after}</span>
+					</div>
 				{/each}
 			</Card.Content>
 			<Card.Footer class="gap-2">
@@ -274,15 +301,22 @@
 	{:else if command?.type === 'delete'}
 		<Card.Root>
 			<Card.Header>
-				<Card.Title>Apagar “{command.event?.title ?? command.eventId}”?</Card.Title>
+				<Card.Title class="font-mono"
+					>Apagar “{command.event?.title ?? command.eventId}”?</Card.Title
+				>
 				{#if command.event}
-					<Card.Description
+					<Card.Description class="font-mono text-xs"
 						>{formatRange(command.event.startAt, command.event.endAt)}</Card.Description
 					>
 				{/if}
 			</Card.Header>
 			<Card.Footer class="gap-2">
-				<Button variant="destructive" onclick={handleConfirm} disabled={confirming}>
+				<Button
+					variant="destructive"
+					class="bg-destructive/20"
+					onclick={handleConfirm}
+					disabled={confirming}
+				>
 					{confirmLabel('delete', confirming)}
 				</Button>
 				<Button variant="outline" onclick={handleCancel} disabled={confirming}>Cancelar</Button>
@@ -291,8 +325,8 @@
 	{:else if command?.type === 'respond'}
 		<Card.Root>
 			<Card.Header>
-				<Card.Title>{command.event?.title ?? 'Responder convite'}</Card.Title>
-				<Card.Description>
+				<Card.Title class="font-mono">{command.event?.title ?? 'Responder convite'}</Card.Title>
+				<Card.Description class="font-mono text-xs">
 					{responseLabel(command.response)}
 					{#if command.event}
 						— {formatRange(command.event.startAt, command.event.endAt)}
@@ -313,8 +347,10 @@
 		{#each command.events as event (event.id)}
 			<Card.Root>
 				<Card.Header>
-					<Card.Title>{event.title}</Card.Title>
-					<Card.Description>{formatRange(event.startAt, event.endAt)}</Card.Description>
+					<Card.Title class="font-mono">{event.title}</Card.Title>
+					<Card.Description class="font-mono text-xs"
+						>{formatRange(event.startAt, event.endAt)}</Card.Description
+					>
 				</Card.Header>
 				{#if event.location}
 					<Card.Content class="text-sm">

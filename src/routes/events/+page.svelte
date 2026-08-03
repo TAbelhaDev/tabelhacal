@@ -2,9 +2,10 @@
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
+	import { Badge } from '$lib/components/ui/badge';
 	import PushSubscribe from '$lib/PushSubscribe.svelte';
 	import ReminderSettings from '$lib/ReminderSettings.svelte';
-	import NavHeader from '$lib/NavHeader.svelte';
+	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -19,30 +20,35 @@
 	}
 </script>
 
-<div class="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
-	<NavHeader />
+<div class="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 p-6">
 	<div class="flex items-center justify-between">
-		<h1 class="text-xl font-semibold">Seus eventos</h1>
-		<Button href="/chat">Novo evento</Button>
+		<div>
+			<p class="font-mono text-xs tracking-[0.2em] text-accent-ink uppercase">Histórico</p>
+			<h1 class="font-mono text-2xl font-semibold tracking-tight">Seus eventos</h1>
+		</div>
+		<Button href={resolve('/chat')}>Novo evento</Button>
 	</div>
 
 	<PushSubscribe vapidPublicKey={data.vapidPublicKey} />
 	<ReminderSettings initialOffsetsMinutes={data.reminderOffsetsMinutes} />
 
 	{#if data.events.length === 0}
-		<p class="text-sm text-muted-foreground">Nenhum evento por aqui ainda.</p>
+		<div class="flex flex-col items-start gap-3 rounded-lg border border-border p-4">
+			<p class="text-sm text-muted-foreground">Nenhum evento por aqui ainda.</p>
+			<Button href={resolve('/chat')} variant="outline" size="sm">Criar o primeiro</Button>
+		</div>
 	{/if}
 
 	{#each data.events as event (event.id)}
 		<Card.Root class={event.status === 'deleted' ? 'opacity-60' : ''}>
 			<Card.Header>
-				<Card.Title class={event.status === 'deleted' ? 'line-through' : ''}
+				<Card.Title class="font-mono {event.status === 'deleted' ? 'line-through' : ''}"
 					>{event.title}</Card.Title
 				>
-				<Card.Description>
+				<Card.Description class="flex items-center gap-2 font-mono text-xs">
 					{formatRange(event.startAt, event.endAt)}
 					{#if event.status === 'deleted'}
-						· <span class="font-medium">Apagado</span>
+						<Badge variant="secondary" class="font-mono">Apagado</Badge>
 					{/if}
 				</Card.Description>
 			</Card.Header>
