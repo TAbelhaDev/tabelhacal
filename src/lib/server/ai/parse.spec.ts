@@ -324,3 +324,44 @@ describe('parseCommandFromText (openai)', () => {
 		expect(command.type).toBe('create');
 	});
 });
+
+describe('parseCommandFromText (deepseek)', () => {
+	it('maps a create_event function call to a create command', async () => {
+		mockFetchOnce({
+			choices: [
+				{
+					message: {
+						tool_calls: [
+							{
+								function: {
+									name: 'create_event',
+									arguments: JSON.stringify({
+										title: 'Dentista',
+										start_at: '2026-07-24T15:00:00-03:00',
+										end_at: '2026-07-24T16:00:00-03:00',
+										location: null,
+										description: null
+									})
+								}
+							}
+						]
+					}
+				}
+			]
+		});
+
+		const command = await parseCommandFromText(
+			baseInput({ provider: 'deepseek', model: 'deepseek-v4-pro' })
+		);
+
+		expect(command.type).toBe('create');
+	});
+
+	it('throws when the DeepSeek API responds with an error status', async () => {
+		mockFetchOnce({ error: 'boom' }, false);
+
+		await expect(
+			parseCommandFromText(baseInput({ provider: 'deepseek', model: 'deepseek-v4-pro' }))
+		).rejects.toThrow('DeepSeek API error');
+	});
+});

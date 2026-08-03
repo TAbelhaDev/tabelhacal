@@ -241,6 +241,7 @@ function systemPrompt(
 export async function parseCommandFromText(input: ParseCommandInput): Promise<Command> {
 	if (input.provider === 'anthropic') return parseWithAnthropic(input);
 	if (input.provider === 'openai') return parseWithOpenAI(input);
+	if (input.provider === 'deepseek') return parseWithDeepSeek(input);
 	throw new Error(`Provider de IA não suportado: ${input.provider}`);
 }
 
@@ -275,8 +276,14 @@ async function parseWithAnthropic(input: ParseCommandInput): Promise<Command> {
 	return toCommand(toolUse.name, toolUse.input, input.calendarEvents);
 }
 
-async function parseWithOpenAI(input: ParseCommandInput): Promise<Command> {
-	const res = await fetch('https://api.openai.com/v1/chat/completions', {
+// OpenAI e DeepSeek falam o mesmo formato de chat completions (messages/tools/tool_choice
+// e o mesmo shape de resposta) — só muda a URL e o rótulo do erro.
+async function parseWithOpenAiCompatible(
+	input: ParseCommandInput,
+	apiUrl: string,
+	errorLabel: string
+): Promise<Command> {
+	const res = await fetch(apiUrl, {
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json',
@@ -298,7 +305,7 @@ async function parseWithOpenAI(input: ParseCommandInput): Promise<Command> {
 			tool_choice: 'required'
 		})
 	});
-	if (!res.ok) throw new Error(`OpenAI API error: ${res.status} ${await res.text()}`);
+	if (!res.ok) throw new Error(`${errorLabel}: ${res.status} ${await res.text()}`);
 
 	const data = (await res.json()) as {
 		choices: Array<{
@@ -311,6 +318,22 @@ async function parseWithOpenAI(input: ParseCommandInput): Promise<Command> {
 		toolCall.function.name,
 		JSON.parse(toolCall.function.arguments),
 		input.calendarEvents
+	);
+}
+
+async function parseWithOpenAI(input: ParseCommandInput): Promise<Command> {
+	return parseWithOpenAiCompatible(
+		input,
+		'https://api.openai.com/v1/chat/completions',
+		'OpenAI API error'
+	);
+}
+
+async function parseWithDeepSeek(input: ParseCommandInput): Promise<Command> {
+	return parseWithOpenAiCompatible(
+		input,
+		'https://api.deepseek.com/chat/completions',
+		'DeepSeek API error'
 	);
 }
 

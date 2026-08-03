@@ -19,13 +19,16 @@
 	});
 </script>
 
-<div class="mx-auto flex min-h-svh max-w-md flex-col justify-center gap-6 p-6">
+<div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-6 p-6">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>Configurar IA</Card.Title>
+			<p class="font-mono text-xs font-medium tracking-[0.2em] text-accent-ink uppercase">
+				Passo 1 de 2
+			</p>
+			<Card.Title class="font-mono">Configurar IA</Card.Title>
 			<Card.Description>
-				Passo 1 de 2 — cole sua própria API key e escolha o modelo que o TabelaCal vai usar pra
-				interpretar seus pedidos de evento.
+				Cole sua própria API key e escolha o modelo que o TabelaCal vai usar pra interpretar seus
+				pedidos de evento.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content>
@@ -68,6 +71,15 @@
 						required
 						placeholder="sk-..."
 					/>
+					<p class="text-xs text-muted-foreground">
+						{AI_PROVIDERS[provider].costHint}
+						<a
+							class="text-accent-ink underline underline-offset-4"
+							href={AI_PROVIDERS[provider].keyUrl}
+							target="_blank"
+							rel="external noreferrer">Gerar uma chave de {AI_PROVIDERS[provider].label}</a
+						>. O pagamento é direto pro provedor, sem taxa do TabelaCal por cima.
+					</p>
 				</div>
 
 				{#if form?.error}
