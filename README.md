@@ -21,6 +21,7 @@ Duas coisas que diferenciam o TabelaCal de um SaaS comum, ambas decisões de des
 
   Provedores suportados hoje e onde gerar a chave:
 
+  - **DeepSeek**: crie uma em [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) (a opção mais barata).
   - **Anthropic (Claude)**: crie uma em [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys) (precisa de uma conta com créditos/billing configurado).
   - **OpenAI (ChatGPT)**: crie uma em [platform.openai.com/api-keys](https://platform.openai.com/api-keys) (idem, precisa de billing configurado na conta).
 

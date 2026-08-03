@@ -22,7 +22,9 @@ describe('buildAuthUrl', () => {
 
 		expect(url.origin + url.pathname).toBe('https://accounts.google.com/o/oauth2/v2/auth');
 		expect(url.searchParams.get('client_id')).toBe('client-123');
-		expect(url.searchParams.get('redirect_uri')).toBe('https://tabelacal.example/auth/google/callback');
+		expect(url.searchParams.get('redirect_uri')).toBe(
+			'https://tabelacal.example/auth/google/callback'
+		);
 		expect(url.searchParams.get('state')).toBe('state-abc');
 		expect(url.searchParams.get('access_type')).toBe('offline');
 		expect(url.searchParams.get('scope')).toContain('calendar.events');
