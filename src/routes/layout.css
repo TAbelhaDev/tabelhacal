@@ -1,89 +1,134 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/work-sans';
+@import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Camada 1: primitivas Catppuccin (hex oficial, não editar à mão) ──
+   Latte (flavor claro) em :root, Mocha (escuro) em .dark.
+   https://catppuccin.com/palette */
 :root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--radius: 0.625rem;
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
+	color-scheme: light;
+
+	--ctp-base: #eff1f5;
+	--ctp-mantle: #e6e9ef;
+	--ctp-crust: #dce0e8;
+	--ctp-surface0: #ccd0da;
+	--ctp-surface1: #bcc0cc;
+	--ctp-overlay0: #9ca0b0;
+	--ctp-subtext0: #6c6f85;
+	--ctp-text: #4c4f69;
+
+	--ctp-rosewater: #dc8a78;
+	--ctp-flamingo: #dd7878;
+	--ctp-pink: #ea76cb;
+	--ctp-mauve: #8839ef;
+	--ctp-red: #d20f39;
+	--ctp-maroon: #e64553;
+	--ctp-peach: #fe640b;
+	--ctp-yellow: #df8e1d;
+	--ctp-green: #40a02b;
+	--ctp-teal: #179299;
+	--ctp-sky: #04a5e5;
+	--ctp-sapphire: #209fb5;
+	--ctp-blue: #1e66f5;
+	--ctp-lavender: #7287fd;
+
+	/* Rosa Catppuccin Latte tem só 2.3:1 de contraste sobre a Base — bem
+	   abaixo do mínimo AA pra texto pequeno. Versão escurecida (mesmo matiz)
+	   pra eyebrows/links/números de passo, que são texto pequeno de verdade. */
+	--accent-ink: #8c4679;
+
+	--shadow-soft: 0 24px 60px -24px rgb(76 79 105 / 0.18);
+	--shadow-glow:
+		0 0 0 1px var(--ctp-pink),
+		0 20px 50px -20px color-mix(in oklab, var(--ctp-pink) 45%, transparent);
+	--gradient-hero: radial-gradient(
+		ellipse 80% 60% at 50% -10%,
+		color-mix(in oklab, var(--ctp-pink) 14%, transparent),
+		transparent 70%
+	);
 }
 
 .dark {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	color-scheme: dark;
+
+	--ctp-base: #1e1e2e;
+	--ctp-mantle: #181825;
+	--ctp-crust: #11111b;
+	--ctp-surface0: #313244;
+	--ctp-surface1: #45475a;
+	--ctp-overlay0: #6c7086;
+	--ctp-subtext0: #a6adc8;
+	--ctp-text: #cdd6f4;
+
+	--ctp-rosewater: #f5e0dc;
+	--ctp-flamingo: #f2cdcd;
+	--ctp-pink: #f5c2e7;
+	--ctp-mauve: #cba6f7;
+	--ctp-red: #f38ba8;
+	--ctp-maroon: #eba0ac;
+	--ctp-peach: #fab387;
+	--ctp-yellow: #f9e2af;
+	--ctp-green: #a6e3a1;
+	--ctp-teal: #94e2d5;
+	--ctp-sky: #89dceb;
+	--ctp-sapphire: #74c7ec;
+	--ctp-blue: #89b4fa;
+	--ctp-lavender: #b4befe;
+
+	--accent-ink: var(--ctp-pink); /* já é ~10.7:1 sobre a Base */
+
+	--shadow-soft: 0 24px 60px -24px var(--ctp-crust);
+	--shadow-glow:
+		0 0 0 1px var(--ctp-pink),
+		0 20px 50px -20px color-mix(in oklab, var(--ctp-pink) 55%, transparent);
+	--gradient-hero: radial-gradient(
+		ellipse 80% 60% at 50% -10%,
+		color-mix(in oklab, var(--ctp-pink) 22%, transparent),
+		transparent 70%
+	);
+}
+
+/* ── Camada 2: tokens semânticos shadcn ──
+   Idêntica nos dois flavors, só aponta pras primitivas acima — declarada
+   em `:root, .dark` de propósito, não só `:root`, pra reavaliar os aliases
+   caso `.dark` algum dia caia num elemento que não seja o <html>. */
+:root,
+.dark {
+	--background: var(--ctp-base);
+	--foreground: var(--ctp-text);
+	--card: var(--ctp-mantle);
+	--card-foreground: var(--ctp-text);
+	--popover: var(--ctp-mantle);
+	--popover-foreground: var(--ctp-text);
+	--primary: var(--ctp-pink);
+	--primary-foreground: var(--ctp-crust);
+	--secondary: var(--ctp-surface0);
+	--secondary-foreground: var(--ctp-text);
+	--muted: var(--ctp-surface0);
+	--muted-foreground: var(--ctp-subtext0);
+	--accent: var(--ctp-green);
+	--accent-foreground: var(--ctp-crust);
+	--destructive: var(--ctp-red);
+	--destructive-foreground: var(--ctp-crust);
+	--border: var(--ctp-surface0);
+	--input: var(--ctp-surface0);
+	--ring: var(--ctp-pink);
+	--chart-1: var(--ctp-blue);
+	--chart-2: var(--ctp-green);
+	--chart-3: var(--ctp-peach);
+	--chart-4: var(--ctp-mauve);
+	--chart-5: var(--ctp-sapphire);
+	--radius: 0.75rem;
 }
 
 @theme inline {
-	--font-sans: 'Inter Variable', sans-serif;
-	--color-sidebar-ring: var(--sidebar-ring);
-	--color-sidebar-border: var(--sidebar-border);
-	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-	--color-sidebar-accent: var(--sidebar-accent);
-	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-	--color-sidebar-primary: var(--sidebar-primary);
-	--color-sidebar-foreground: var(--sidebar-foreground);
-	--color-sidebar: var(--sidebar);
+	--font-sans: 'Work Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
 	--color-chart-5: var(--chart-5);
 	--color-chart-4: var(--chart-4);
 	--color-chart-3: var(--chart-3);
@@ -107,6 +152,26 @@
 	--color-card: var(--card);
 	--color-foreground: var(--foreground);
 	--color-background: var(--background);
+
+	--color-accent-ink: var(--accent-ink);
+	--color-ctp-rosewater: var(--ctp-rosewater);
+	--color-ctp-flamingo: var(--ctp-flamingo);
+	--color-ctp-pink: var(--ctp-pink);
+	--color-ctp-mauve: var(--ctp-mauve);
+	--color-ctp-red: var(--ctp-red);
+	--color-ctp-maroon: var(--ctp-maroon);
+	--color-ctp-peach: var(--ctp-peach);
+	--color-ctp-yellow: var(--ctp-yellow);
+	--color-ctp-green: var(--ctp-green);
+	--color-ctp-teal: var(--ctp-teal);
+	--color-ctp-sky: var(--ctp-sky);
+	--color-ctp-sapphire: var(--ctp-sapphire);
+	--color-ctp-blue: var(--ctp-blue);
+	--color-ctp-lavender: var(--ctp-lavender);
+
+	--shadow-soft: var(--shadow-soft);
+	--shadow-glow: var(--shadow-glow);
+
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);

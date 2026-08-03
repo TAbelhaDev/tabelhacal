@@ -30,8 +30,8 @@ export default defineConfig({
 				name: 'TabelaCal',
 				short_name: 'TabelaCal',
 				description: 'Agenda com IA — fale e o TabelaCal cria o evento no seu Google Calendar.',
-				theme_color: '#18181b',
-				background_color: '#18181b',
+				theme_color: '#1e1e2e',
+				background_color: '#1e1e2e',
 				display: 'standalone',
 				start_url: '/',
 				icons: [
