@@ -7,7 +7,7 @@
       "dependencies": {
         "@block65/webcrypto-web-push": "^1.0.2",
         "sveltekit-flash-message": "^2.4.6",
-        "tabelawebui": "^0.5.0",
+        "tabelawebui": "^0.6.0",
       },
       "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -1260,7 +1260,7 @@
 
     "tabbable": ["tabbable@6.5.0", "", {}, "sha512-wieBHXygIm7OyQOu5hQlkk62/WyCFYGlWg7L6/ZCUZwx0o398Zkn4pVmMyfYhfMG8kGrj/Krt8eIk6UKC6VzwA=="],
 
-    "tabelawebui": ["tabelawebui@0.5.0", "", { "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-/pvsDKohyLSJvaIPDebzh5zaUEWa9LE1JpGqWFOqhGghQBuTb4ZkDv0iqKBbHdGfd3igOIBXEoc3BLiBKRq0nA=="],
+    "tabelawebui": ["tabelawebui@0.6.0", "", { "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-sn33QdXFfTK+D2Gtp22O9DjTJFIVrGcJOIbLI0Mq4xmCUiD9mO1fKkpov0LyC+MM+quSmIkaNuq7bYo3j+7skA=="],
 
     "tailwind-merge": ["tailwind-merge@3.6.0", "", {}, "sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w=="],
 
