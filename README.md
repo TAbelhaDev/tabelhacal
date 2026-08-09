@@ -15,6 +15,8 @@
 
 ---
 
+## O que é
+
 A ideia desse app é facilitar e agilizar a organização da sua agenda, usando linguagem natural e IA para interpretar as suas mensagens e traduzir para a API do Google Calendar.
 
 ## Como funciona
@@ -83,6 +85,18 @@ bun run build   # build de produção (worker + PWA assets)
 ```
 
 Copie `.env.example` pra `.dev.vars` e preencha as variáveis antes de rodar: `MASTER_KEY` pra criptografia das credenciais dos usuários, e `VAPID_PRIVATE_KEY` pros lembretes proativos via push (o `.env.example` tem o comando pra gerar um par de chaves novo).
+
+## Desenvolvimento
+
+Stack e comandos: veja a seção *Rodando localmente* acima. Testes:
+
+```sh
+bun run test    # testes unitários
+```
+
+## Changelog
+
+Veja [CHANGELOG.md](CHANGELOG.md) para o histórico de versões.
 
 ## Apoie o projeto
 
