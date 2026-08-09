@@ -10,7 +10,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Check for app skeleton
         id: skeleton
@@ -33,7 +33,7 @@ jobs:
         if: steps.skeleton.outputs.exists == 'true'
         run: bun run lint
 
-      - name: Type check
+      - name: Check
         if: steps.skeleton.outputs.exists == 'true'
         run: bun run check
 
@@ -44,7 +44,3 @@ jobs:
       - name: Build
         if: steps.skeleton.outputs.exists == 'true'
         run: bun run build
-
-      - name: No app skeleton yet
-        if: steps.skeleton.outputs.exists == 'false'
-        run: echo "Nenhum package.json ainda — pulando lint/test/build."
