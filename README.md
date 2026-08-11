@@ -2,7 +2,9 @@
 
 # TabelaCal
 
-**Agenda que se organiza por conversa: linguagem natural + IA traduzem suas mensagens para comandos do Google Calendar.**
+**A calendar you organise by conversation: natural language + AI translate your messages into Google Calendar commands.**
+
+**English** · [Português](README.pt-BR.md)
 
 [![SvelteKit](https://img.shields.io/badge/SvelteKit-Svelte-ff3e00?style=flat-square&logo=svelte&logoColor=white)](https://kit.svelte.dev)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
@@ -15,97 +17,143 @@
 
 ---
 
-## O que é
+## What it is
 
-A ideia desse app é facilitar e agilizar a organização da sua agenda, usando linguagem natural e IA para interpretar as suas mensagens e traduzir para a API do Google Calendar.
+The idea of this app is to make organising your calendar faster and easier, using
+natural language and AI to interpret your messages and translate them into calls
+to the Google Calendar API.
 
-## Como funciona
+The interface is in Portuguese, since that is who the app is for; the code is in
+English. See [CONTRIBUTING.md](CONTRIBUTING.md#language) for the convention.
 
-1. Você escreve o que quer fazer, em linguagem natural, na tela de chat.
-2. A IA traduz isso em um comando: listar, modificar, criar ou apagar eventos no seu Google Calendar e estrutura os dados de acordo com o que é esperado pela API.
-3. Antes de qualquer mudança, um card de confirmação aparece, mostrando o que será feito (ex: criar um evento com título, data/hora, local e descrição). Você pode confirmar, modificar algum campo manualmente, pedir para a IA fazer um ajuste pontual ou cancelar.
-4. Uma vez confirmado, o comando é executado automaticamente no seu Google Calendar e registrado temporariamente no banco do TabelaCal, para que você possa ver o histórico do que foi feito.
+## How it works
 
-Também funciona como PWA: você pode "instalar" no celular ou no desktop e usar como um app nativo, com atualização automática (aparece um aviso quando uma versão nova for lançada).
+1. You write what you want to do, in natural language, on the chat screen.
+2. The AI turns it into a command — list, modify, create or delete events on your
+   Google Calendar — and structures the data the way the API expects.
+3. Before any change, a confirmation card appears showing what is about to happen
+   (for example: create an event with a title, date/time, location and
+   description). You can confirm it, edit a field by hand, ask the AI for one
+   specific adjustment, or cancel.
+4. Once confirmed, the command runs against your Google Calendar and is recorded
+   temporarily in TabelaCal's database, so you can see a history of what was
+   done.
 
-## Traga suas próprias credenciais
+It works as a PWA too: you can install it on a phone or desktop and use it like a
+native app, with automatic updates (a notice appears when a new version ships).
 
-Duas coisas que diferenciam o TabelaCal de um SaaS comum, ambas decisões de design bem deliberadas:
+## Bring your own credentials
 
-- A chave de IA é sua. No onboarding, você cola a sua própria API key e escolhe o provedor e o modelo que quiser usar. Em vez de cobrar uma mensalidade ou anuidade fixa, o TabelaCal deixa você ditar seu próprio custo: escolhendo um modelo mais barato ou mais caro, você decide quanto paga. Como o pagamento é feito direto para o provedor, não há qualquer tipo de taxa de operação do TabelaCal por cima.
+Two things separate TabelaCal from an ordinary SaaS, both deliberate design
+decisions:
 
-  Provedores suportados hoje e onde gerar a chave:
+- **The AI key is yours.** During onboarding you paste your own API key and pick
+  the provider and model you want. Instead of charging a fixed monthly or yearly
+  fee, TabelaCal lets you dictate your own cost: by choosing a cheaper or more
+  expensive model, you decide what you pay. Since the payment goes straight to
+  the provider, there is no TabelaCal operating fee on top.
 
-  - **DeepSeek**: crie uma em [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) (a opção mais barata).
-  - **Anthropic (Claude)**: crie uma em [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys) (precisa de uma conta com créditos/billing configurado).
-  - **OpenAI (ChatGPT)**: crie uma em [platform.openai.com/api-keys](https://platform.openai.com/api-keys) (idem, precisa de billing configurado na conta).
+  Providers supported today, and where to generate a key:
 
-- O acesso ao Google Calendar também é seu. Se o TabelaCal tivesse um único "app do Google" compartilhado por todo mundo, mais cedo ou mais tarde ele passaria do limite de usuários de teste e precisaria da revisão/verificação do Google pra escopos sensíveis como o do Calendar, um processo que pode envolver auditoria de segurança paga, e esse custo teria que ser repassado pra alguém: ou pra quem hospeda o TabelaCal, ou pros usuários. Pra evitar isso, cada usuário cria seu próprio projeto no Google Cloud Console, ativa a API do Calendar nele e cola o Client ID/Secret gerados no TabelaCal. Como é um projeto individual, ele nunca chega perto do limite que exigiria verificação, ficando tudo gratuito, sem custo de infra pra ninguém. Como é um processo mais trabalhoso para quem não está acostumado em mexer com tecnologia, o app te guia por todo o processo em um onboarding. É uma configuração inicial e única.
+  - **DeepSeek**: create one at
+    [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) (the
+    cheapest option).
+  - **Anthropic (Claude)**: create one at
+    [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+    (needs an account with credits/billing configured).
+  - **OpenAI (ChatGPT)**: create one at
+    [platform.openai.com/api-keys](https://platform.openai.com/api-keys) (same —
+    billing has to be configured on the account).
 
-Ou seja: o TabelaCal cuida do hosting, da UI e de orquestrar tudo, mas quem "paga a conta" da IA e é dono do próprio acesso ao Google é você.
+- **The Google Calendar access is yours too.** If TabelaCal had a single "Google
+  app" shared by everyone, sooner or later it would pass the test-user limit and
+  need Google's review/verification for sensitive scopes like Calendar's — a
+  process that can involve a paid security audit, and that cost would land on
+  someone: either on whoever hosts TabelaCal, or on its users. To avoid it, each
+  user creates their own project in the Google Cloud Console, enables the
+  Calendar API on it and pastes the generated Client ID/Secret into TabelaCal.
+  Being an individual project, it never comes close to the limit that would
+  require verification, so it stays free and costs nobody any infrastructure.
+  Because that is fiddly for anyone not used to this kind of thing, the app walks
+  you through the whole process in an onboarding wizard. It is a one-time setup.
 
-## Funcionalidades
+In short: TabelaCal handles the hosting, the UI and the orchestration, but you
+are the one paying the AI bill and owning your own Google access.
 
-- **Onboarding guiado** em duas etapas: configurar a IA (chave + modelo) e conectar o Google Calendar (wizard explicando como criar o projeto no GCP).
-- **Chat em linguagem natural** pra listar, criar, modificar, apagar ou responder convites de eventos em qualquer uma das suas agendas conectadas (não só a `primary`) — inclusive eventos que já existiam antes do TabelaCal — com card de confirmação antes de qualquer mudança real. Eventos recorrentes também são suportados (ex: "toda segunda às 9h até o fim do mês"), com opção de editar só uma ocorrência ou a série inteira.
-- **Lembretes proativos**: notificação push ~30 minutos antes de um evento começar (opt-in na tela de histórico).
-- **Histórico**: uma tela dedicada com tudo que já foi feito pelo app (independente do chat), de onde também dá pra excluir direto.
-- **Login via Google**, sem cadastro separado de e-mail/senha, sua conta Google já é sua identidade no app.
-- **PWA instalável**, com prompt de atualização quando versões novas são lançadas.
-- Fuso horário detectado automaticamente do seu navegador no onboarding.
+## Features
 
-### O que ainda não tem, mas tá no radar
+- **Guided onboarding** in two steps: configure the AI (key + model) and connect
+  Google Calendar (a wizard explaining how to create the GCP project).
+- **Natural-language chat** to list, create, modify, delete or respond to
+  invitations for events on any of your connected calendars (not just
+  `primary`) — including events that existed before TabelaCal — with a
+  confirmation card before any real change. Recurring events are supported too
+  ("every Monday at 9am until the end of the month"), with the option of editing
+  a single occurrence or the whole series.
+- **Proactive reminders**: a push notification ~30 minutes before an event
+  starts (opt-in on the history screen).
+- **History**: a dedicated screen with everything the app has done (independent
+  of the chat), from which you can also delete directly.
+- **Login via Google**, with no separate email/password signup — your Google
+  account is already your identity in the app.
+- **Installable PWA**, with an update prompt when new versions ship.
+- Time zone detected automatically from your browser during onboarding.
 
-- Input por voz e por imagem.
-- Outros calendários além do Google (Apple, Outlook).
-- Criar evento por WhatsApp/Telegram.
+### Not there yet, but on the radar
 
-Ver `ESCOPO.md` pra decisões de produto com mais detalhe.
+- Voice and image input.
+- Calendars other than Google (Apple, Outlook).
+- Creating events over WhatsApp/Telegram.
 
-## Rodando localmente
+See `ESCOPO.md` for the product decisions in more detail.
 
-Stack: SvelteKit + Cloudflare Workers (D1 + KV), Bun como package manager.
+## Running locally
+
+Stack: SvelteKit + Cloudflare Workers (D1 + KV), Bun as the package manager.
 
 ```sh
 bun install
 
-# aplica as migrations no D1 local
+# apply the migrations to the local D1
 bunx wrangler d1 migrations apply ndrc-db --local
 
 bun run dev
 ```
 
-Outros comandos úteis:
+Other useful commands:
 
 ```sh
 bun run check   # typecheck
 bun run lint    # prettier + eslint
-bun run test    # testes unitários
-bun run build   # build de produção (worker + PWA assets)
+bun run test    # unit tests
+bun run build   # production build (worker + PWA assets)
 ```
 
-Copie `.env.example` pra `.dev.vars` e preencha as variáveis antes de rodar: `MASTER_KEY` pra criptografia das credenciais dos usuários, e `VAPID_PRIVATE_KEY` pros lembretes proativos via push (o `.env.example` tem o comando pra gerar um par de chaves novo).
+Copy `.env.example` to `.dev.vars` and fill in the variables before running:
+`MASTER_KEY` encrypts the users' stored credentials, and `VAPID_PRIVATE_KEY` is
+for the proactive push reminders (`.env.example` has the command to generate a
+fresh key pair).
 
-## Desenvolvimento
+## Development
 
-Stack e comandos: veja a seção *Rodando localmente* acima. Testes:
+Stack and commands: see _Running locally_ above. Tests:
 
 ```sh
-bun run test    # testes unitários
+bun run test    # unit tests
 ```
 
 ## Changelog
 
-Veja [CHANGELOG.md](CHANGELOG.md) para o histórico de versões.
+See [CHANGELOG.md](CHANGELOG.md) for the version history.
 
-## Apoie o projeto
+## Support the project
 
 - **Global**: [ko-fi.com/ianptkcs](https://ko-fi.com/ianptkcs)
-- **Brasil (Pix)**: escaneie o QR abaixo ou copie o código
+- **Brazil (Pix)**: scan the QR below or copy the code
 
   <img src="pix-qr.png" alt="Pix QR" width="200" />
 
-  <details><summary>Código Pix (copiar)</summary>
+  <details><summary>Pix code (copy)</summary>
 
   ```
   00020126580014BR.GOV.BCB.PIX01365ad933b0-dcdc-4525-a736-0759902aeec65204000053039865802BR5925Ian Patrick da Costa Soar6009SAO PAULO62140510tQA85x6Dov63041FB6
@@ -113,11 +161,10 @@ Veja [CHANGELOG.md](CHANGELOG.md) para o histórico de versões.
 
   </details>
 
-## Licença
+## License
 
-[AGPL-3.0](LICENSE) — copyleft forte: você pode usar, modificar e até
-hospedar o TabelaCal comercialmente, mas qualquer versão modificada, inclusive
-rodando como serviço via rede (SaaS), precisa continuar open source sob a
-mesma licença.
+[AGPL-3.0](LICENSE) — strong copyleft: you may use, modify and even host
+TabelaCal commercially, but any modified version, including one running as a
+network service (SaaS), has to stay open source under the same license.
 
-Quer contribuir? Dá uma olhada em `CONTRIBUTING.md`.
+Want to contribute? Have a look at `CONTRIBUTING.md`.
