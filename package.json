@@ -18,7 +18,8 @@
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"deploy": "wrangler d1 migrations apply ndrc-db --remote && bun run build && wrangler deploy"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
@@ -63,6 +64,6 @@
 	"dependencies": {
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"sveltekit-flash-message": "^2.4.6",
-		"tabelawebui": "^0.6.0"
+		"@tabeladev/tabelawebui": "^0.13.0"
 	}
 }
