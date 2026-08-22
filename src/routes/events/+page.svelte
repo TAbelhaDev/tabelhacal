@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
+	import { Button, Card, Badge } from '@tabeladev/tabelawebui';
 	import PushSubscribe from '$lib/PushSubscribe.svelte';
 	import ReminderSettings from '$lib/ReminderSettings.svelte';
 	import { resolve } from '$app/paths';
@@ -26,7 +24,7 @@
 			<p class="font-mono text-xs tracking-[0.2em] text-accent-ink uppercase">Histórico</p>
 			<h1 class="font-mono text-2xl font-semibold tracking-tight">Seus eventos</h1>
 		</div>
-		<Button href={resolve('/chat')}>Novo evento</Button>
+		<Button href={resolve('/chat')} variant="primary">Novo evento</Button>
 	</div>
 
 	<PushSubscribe vapidPublicKey={data.vapidPublicKey} />
@@ -40,7 +38,7 @@
 	{/if}
 
 	{#each data.events as event (event.id)}
-		<Card.Root class={event.status === 'deleted' ? 'opacity-60' : ''}>
+		<Card class={event.status === 'deleted' ? 'opacity-60' : ''}>
 			<Card.Header>
 				<Card.Title class="font-mono {event.status === 'deleted' ? 'line-through' : ''}"
 					>{event.title}</Card.Title
@@ -66,6 +64,6 @@
 					</form>
 				</Card.Footer>
 			{/if}
-		</Card.Root>
+		</Card>
 	{/each}
 </div>

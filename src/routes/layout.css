@@ -1,40 +1,41 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
+@import '@tabeladev/tabelawebui/theme.css';
 @import '@fontsource-variable/work-sans';
 @import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Camada 1: primitivas Catppuccin (hex oficial, não editar à mão) ──
-   Latte (flavor claro) em :root, Mocha (escuro) em .dark.
-   https://catppuccin.com/palette */
+/* ── Camada 1: primitivas Catppuccin ──
+   Vêm da lib @tabeladev/tabelawebui (theme.css) — uma fonte de verdade, não duplicar
+   aqui. Latte em :root, Mocha em .dark. https://catppuccin.com/palette */
 :root {
 	color-scheme: light;
 
-	--ctp-base: #eff1f5;
-	--ctp-mantle: #e6e9ef;
-	--ctp-crust: #dce0e8;
-	--ctp-surface0: #ccd0da;
-	--ctp-surface1: #bcc0cc;
-	--ctp-overlay0: #9ca0b0;
-	--ctp-subtext0: #6c6f85;
-	--ctp-text: #4c4f69;
+	--ctp-base: var(--twui-latte-base);
+	--ctp-mantle: var(--twui-latte-mantle);
+	--ctp-crust: var(--twui-latte-crust);
+	--ctp-surface0: var(--twui-latte-surface0);
+	--ctp-surface1: var(--twui-latte-surface1);
+	--ctp-overlay0: var(--twui-latte-overlay0);
+	--ctp-subtext0: var(--twui-latte-subtext0);
+	--ctp-text: var(--twui-latte-text);
 
-	--ctp-rosewater: #dc8a78;
-	--ctp-flamingo: #dd7878;
-	--ctp-pink: #ea76cb;
-	--ctp-mauve: #8839ef;
-	--ctp-red: #d20f39;
-	--ctp-maroon: #e64553;
-	--ctp-peach: #fe640b;
-	--ctp-yellow: #df8e1d;
-	--ctp-green: #40a02b;
-	--ctp-teal: #179299;
-	--ctp-sky: #04a5e5;
-	--ctp-sapphire: #209fb5;
-	--ctp-blue: #1e66f5;
-	--ctp-lavender: #7287fd;
+	--ctp-rosewater: var(--twui-latte-rosewater);
+	--ctp-flamingo: var(--twui-latte-flamingo);
+	--ctp-pink: var(--twui-latte-pink);
+	--ctp-mauve: var(--twui-latte-mauve);
+	--ctp-red: var(--twui-latte-red);
+	--ctp-maroon: var(--twui-latte-maroon);
+	--ctp-peach: var(--twui-latte-peach);
+	--ctp-yellow: var(--twui-latte-yellow);
+	--ctp-green: var(--twui-latte-green);
+	--ctp-teal: var(--twui-latte-teal);
+	--ctp-sky: var(--twui-latte-sky);
+	--ctp-sapphire: var(--twui-latte-sapphire);
+	--ctp-blue: var(--twui-latte-blue);
+	--ctp-lavender: var(--twui-latte-lavender);
 
 	/* Rosa Catppuccin Latte tem só 2.3:1 de contraste sobre a Base — bem
 	   abaixo do mínimo AA pra texto pequeno. Versão escurecida (mesmo matiz)
@@ -50,34 +51,38 @@
 		color-mix(in oklab, var(--ctp-pink) 14%, transparent),
 		transparent 70%
 	);
+
+	/* A lib usa serif (Newsreader) no corpo das seções de landing; o tabelacal
+	   mantém o Work Sans como fonte de corpo em todo o app. */
+	--twui-font-serif: 'Work Sans Variable', ui-serif, Georgia, serif;
 }
 
 .dark {
 	color-scheme: dark;
 
-	--ctp-base: #1e1e2e;
-	--ctp-mantle: #181825;
-	--ctp-crust: #11111b;
-	--ctp-surface0: #313244;
-	--ctp-surface1: #45475a;
-	--ctp-overlay0: #6c7086;
-	--ctp-subtext0: #a6adc8;
-	--ctp-text: #cdd6f4;
+	--ctp-base: var(--twui-mocha-base);
+	--ctp-mantle: var(--twui-mocha-mantle);
+	--ctp-crust: var(--twui-mocha-crust);
+	--ctp-surface0: var(--twui-mocha-surface0);
+	--ctp-surface1: var(--twui-mocha-surface1);
+	--ctp-overlay0: var(--twui-mocha-overlay0);
+	--ctp-subtext0: var(--twui-mocha-subtext0);
+	--ctp-text: var(--twui-mocha-text);
 
-	--ctp-rosewater: #f5e0dc;
-	--ctp-flamingo: #f2cdcd;
-	--ctp-pink: #f5c2e7;
-	--ctp-mauve: #cba6f7;
-	--ctp-red: #f38ba8;
-	--ctp-maroon: #eba0ac;
-	--ctp-peach: #fab387;
-	--ctp-yellow: #f9e2af;
-	--ctp-green: #a6e3a1;
-	--ctp-teal: #94e2d5;
-	--ctp-sky: #89dceb;
-	--ctp-sapphire: #74c7ec;
-	--ctp-blue: #89b4fa;
-	--ctp-lavender: #b4befe;
+	--ctp-rosewater: var(--twui-mocha-rosewater);
+	--ctp-flamingo: var(--twui-mocha-flamingo);
+	--ctp-pink: var(--twui-mocha-pink);
+	--ctp-mauve: var(--twui-mocha-mauve);
+	--ctp-red: var(--twui-mocha-red);
+	--ctp-maroon: var(--twui-mocha-maroon);
+	--ctp-peach: var(--twui-mocha-peach);
+	--ctp-yellow: var(--twui-mocha-yellow);
+	--ctp-green: var(--twui-mocha-green);
+	--ctp-teal: var(--twui-mocha-teal);
+	--ctp-sky: var(--twui-mocha-sky);
+	--ctp-sapphire: var(--twui-mocha-sapphire);
+	--ctp-blue: var(--twui-mocha-blue);
+	--ctp-lavender: var(--twui-mocha-lavender);
 
 	--accent-ink: var(--ctp-pink); /* já é ~10.7:1 sobre a Base */
 

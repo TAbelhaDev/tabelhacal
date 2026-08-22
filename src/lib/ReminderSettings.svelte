@@ -2,10 +2,8 @@
 	// Configuração de lembretes proativos (quantos, com quanta antecedência cada
 	// um) — ver README "Lembretes proativos" e src/lib/server/push/reminders.ts.
 	import { untrack } from 'svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
+	import { Button, Input, Badge } from '@tabeladev/tabelawebui';
 	import * as Select from '$lib/components/ui/select';
-	import { Badge } from '$lib/components/ui/badge';
 	import { toast } from 'svelte-sonner';
 
 	let { initialOffsetsMinutes }: { initialOffsetsMinutes: number[] } = $props();

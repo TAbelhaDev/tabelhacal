@@ -2,9 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import * as Card from '$lib/components/ui/card';
+	import { Button, Input, Card } from '@tabeladev/tabelawebui';
 
 	interface EventDraft {
 		title: string;
@@ -205,7 +203,7 @@
 </script>
 
 <div class="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 p-6">
-	<Card.Root>
+	<Card>
 		<Card.Header>
 			<Card.Title class="font-mono">O que você quer fazer?</Card.Title>
 			<Card.Description
@@ -220,12 +218,12 @@
 					disabled={parsing}
 					class="flex-1"
 				/>
-				<Button type="submit" disabled={parsing || !text.trim()}>
+				<Button type="submit" variant="primary" disabled={parsing || !text.trim()}>
 					{parsing ? 'Interpretando...' : 'Enviar'}
 				</Button>
 			</form>
 		</Card.Content>
-	</Card.Root>
+	</Card>
 
 	{#if !command && !parsing}
 		<div class="flex flex-col gap-2 px-1">
@@ -244,7 +242,7 @@
 	{/if}
 
 	{#if command?.type === 'create'}
-		<Card.Root>
+		<Card>
 			<Card.Header>
 				<Card.Title class="font-mono">{command.draft.title}</Card.Title>
 				<Card.Description class="font-mono text-xs"
@@ -267,14 +265,14 @@
 					</p>{/if}
 			</Card.Content>
 			<Card.Footer class="gap-2">
-				<Button onclick={handleConfirm} disabled={confirming}>
+				<Button variant="primary" onclick={handleConfirm} disabled={confirming}>
 					{confirmLabel('create', confirming)}
 				</Button>
 				<Button variant="outline" onclick={handleCancel} disabled={confirming}>Cancelar</Button>
 			</Card.Footer>
-		</Card.Root>
+		</Card>
 	{:else if command?.type === 'modify'}
-		<Card.Root>
+		<Card>
 			<Card.Header>
 				<Card.Title class="font-mono">{command.before?.title ?? 'Modificar evento'}</Card.Title>
 				<Card.Description>Confira as alterações antes de confirmar.</Card.Description>
@@ -292,14 +290,14 @@
 				{/each}
 			</Card.Content>
 			<Card.Footer class="gap-2">
-				<Button onclick={handleConfirm} disabled={confirming}>
+				<Button variant="primary" onclick={handleConfirm} disabled={confirming}>
 					{confirmLabel('modify', confirming)}
 				</Button>
 				<Button variant="outline" onclick={handleCancel} disabled={confirming}>Cancelar</Button>
 			</Card.Footer>
-		</Card.Root>
+		</Card>
 	{:else if command?.type === 'delete'}
-		<Card.Root>
+		<Card>
 			<Card.Header>
 				<Card.Title class="font-mono"
 					>Apagar “{command.event?.title ?? command.eventId}”?</Card.Title
@@ -311,19 +309,14 @@
 				{/if}
 			</Card.Header>
 			<Card.Footer class="gap-2">
-				<Button
-					variant="destructive"
-					class="bg-destructive/20"
-					onclick={handleConfirm}
-					disabled={confirming}
-				>
+				<Button variant="danger" onclick={handleConfirm} disabled={confirming}>
 					{confirmLabel('delete', confirming)}
 				</Button>
 				<Button variant="outline" onclick={handleCancel} disabled={confirming}>Cancelar</Button>
 			</Card.Footer>
-		</Card.Root>
+		</Card>
 	{:else if command?.type === 'respond'}
-		<Card.Root>
+		<Card>
 			<Card.Header>
 				<Card.Title class="font-mono">{command.event?.title ?? 'Responder convite'}</Card.Title>
 				<Card.Description class="font-mono text-xs">
@@ -334,18 +327,18 @@
 				</Card.Description>
 			</Card.Header>
 			<Card.Footer class="gap-2">
-				<Button onclick={handleConfirm} disabled={confirming}>
+				<Button variant="primary" onclick={handleConfirm} disabled={confirming}>
 					{confirmLabel('respond', confirming)}
 				</Button>
 				<Button variant="outline" onclick={handleCancel} disabled={confirming}>Cancelar</Button>
 			</Card.Footer>
-		</Card.Root>
+		</Card>
 	{:else if command?.type === 'list'}
 		{#if command.events.length === 0}
 			<p class="text-sm text-muted-foreground">Nenhum evento encontrado nos próximos 30 dias.</p>
 		{/if}
 		{#each command.events as event (event.id)}
-			<Card.Root>
+			<Card>
 				<Card.Header>
 					<Card.Title class="font-mono">{event.title}</Card.Title>
 					<Card.Description class="font-mono text-xs"
@@ -357,7 +350,7 @@
 						<p><strong>Local:</strong> {event.location}</p>
 					</Card.Content>
 				{/if}
-			</Card.Root>
+			</Card>
 		{/each}
 	{/if}
 </div>

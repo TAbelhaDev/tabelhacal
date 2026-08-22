@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '@tabeladev/tabelawebui';
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
 	import ThemeToggle from './ThemeToggle.svelte';
 

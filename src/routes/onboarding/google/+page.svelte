@@ -2,10 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { browser } from '$app/environment';
 	import { toast } from 'svelte-sonner';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import * as Card from '$lib/components/ui/card';
+	import { Button, Input, Label, Card } from '@tabeladev/tabelawebui';
 	import CopyIcon from '@lucide/svelte/icons/copy';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import type { ActionData, PageData } from './$types';
@@ -101,7 +98,7 @@
 </script>
 
 <div class="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-6 p-6">
-	<Card.Root>
+	<Card>
 		<Card.Header>
 			<p class="font-mono text-xs font-medium tracking-[0.2em] text-accent-ink uppercase">
 				Passo 2 de 2
@@ -124,7 +121,7 @@
 					nunca vistas por mais ninguém.
 				</p>
 				<div class="flex flex-col gap-2">
-					<Button onclick={next}>Não tenho ainda, me guia</Button>
+					<Button variant="primary" onclick={next}>Não tenho ainda, me guia</Button>
 					<Button variant="outline" onclick={() => (screen = 'credentials')}>
 						Já tenho as credenciais
 					</Button>
@@ -196,7 +193,7 @@
 
 				<div class="flex justify-between gap-2">
 					<Button variant="ghost" onclick={back}>Voltar</Button>
-					<Button onclick={next}>
+					<Button variant="primary" onclick={next}>
 						{screen === STEPS.length - 1 ? 'Já criei, colar credenciais' : 'Avançar'}
 					</Button>
 				</div>
@@ -236,10 +233,10 @@
 
 					<div class="flex justify-between gap-2">
 						<Button type="button" variant="ghost" onclick={back}>Voltar</Button>
-						<Button type="submit">Conectar com Google</Button>
+						<Button type="submit" variant="primary">Conectar com Google</Button>
 					</div>
 				</form>
 			{/if}
 		</Card.Content>
-	</Card.Root>
+	</Card>
 </div>

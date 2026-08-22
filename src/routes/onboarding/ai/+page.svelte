@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import * as Card from '$lib/components/ui/card';
+	import { Button, Input, Label, Card } from '@tabeladev/tabelawebui';
 	import * as Select from '$lib/components/ui/select';
 	import { AI_PROVIDERS, type AiProvider } from '$lib/ai-providers';
 	import type { ActionData } from './$types';
@@ -20,7 +17,7 @@
 </script>
 
 <div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-6 p-6">
-	<Card.Root>
+	<Card>
 		<Card.Header>
 			<p class="font-mono text-xs font-medium tracking-[0.2em] text-accent-ink uppercase">
 				Passo 1 de 2
@@ -86,8 +83,8 @@
 					<p class="text-sm text-destructive">{form.error}</p>
 				{/if}
 
-				<Button type="submit">Continuar</Button>
+				<Button type="submit" variant="primary">Continuar</Button>
 			</form>
 		</Card.Content>
-	</Card.Root>
+	</Card>
 </div>
