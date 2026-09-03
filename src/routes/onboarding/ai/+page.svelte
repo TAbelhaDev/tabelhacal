@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button, Input, Label, Card } from '@tabeladev/tabelawebui';
+	import { Button, Input, Label, Card } from '@tabelhadev/tabelhawebui';
 	import * as Select from '$lib/components/ui/select';
 	import { AI_PROVIDERS, type AiProvider } from '$lib/ai-providers';
 	import type { ActionData } from './$types';

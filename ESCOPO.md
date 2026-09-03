@@ -51,7 +51,7 @@ OAuth Client**:
      ser um problema porque é 1 projeto por 1 usuário.
 4. Cria uma credencial **OAuth Client ID** (tipo **Web application**), com
    **Authorized redirect URI** apontando pro callback fixo do TabelaCal
-   (ex: `https://tabelacal.<domínio>/auth/google/callback`).
+   (ex: `https://tabelhacal.<domínio>/auth/google/callback`).
 5. Copia o **Client ID** e o **Client Secret** gerados e cola nas configurações
    do TabelaCal.
 6. O TabelaCal usa essas credenciais (armazenadas criptografadas) pra rodar o

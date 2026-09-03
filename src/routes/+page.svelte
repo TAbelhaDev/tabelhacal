@@ -11,7 +11,7 @@
 		LandingFooter,
 		SectionHeading,
 		TerminalWindow
-	} from '@tabeladev/tabelawebui';
+	} from '@tabelhadev/tabelhawebui';
 	import CodeXmlIcon from '@lucide/svelte/icons/code-xml';
 	import KeyRoundIcon from '@lucide/svelte/icons/key-round';
 	import ShieldCheckIcon from '@lucide/svelte/icons/shield-check';
@@ -24,7 +24,7 @@
 	import CalendarPlusIcon from '@lucide/svelte/icons/calendar-plus';
 	import MessageCircleIcon from '@lucide/svelte/icons/message-circle';
 
-	const REPO_URL = 'https://github.com/TabelaDev/tabelacal';
+	const REPO_URL = 'https://github.com/TAbelhaDev/tabelhacal';
 
 	const steps = [
 		{
@@ -115,7 +115,7 @@
 		</LandingHero>
 
 		<section aria-hidden="true">
-			<TerminalWindow title="tabelacal — chat">
+			<TerminalWindow title="tabelhacal — chat">
 				<div class="flex flex-col gap-3">
 					<p class="font-mono text-sm">
 						<span class="text-accent-ink">›</span> marca reunião com o joão quinta às 15h no calendário
@@ -212,7 +212,7 @@
 		</section>
 
 		<LandingFooter
-			name="tabelacal"
+			name="tabelhacal"
 			license="AGPL-3.0 · SvelteKit + Cloudflare Workers"
 			repoUrl={REPO_URL}
 			class="-mx-6 px-6"

@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { Button, Input, Card } from '@tabeladev/tabelawebui';
+	import { Button, Input, Card } from '@tabelhadev/tabelhawebui';
 
 	interface EventDraft {
 		title: string;

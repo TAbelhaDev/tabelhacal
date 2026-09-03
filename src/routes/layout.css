@@ -1,14 +1,14 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
-@import '@tabeladev/tabelawebui/theme.css';
+@import '@tabelhadev/tabelhawebui/theme.css';
 @import '@fontsource-variable/work-sans';
 @import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:is(.dark *));
 
 /* ── Camada 1: primitivas Catppuccin ──
-   Vêm da lib @tabeladev/tabelawebui (theme.css) — uma fonte de verdade, não duplicar
+   Vêm da lib @tabelhadev/tabelhawebui (theme.css) — uma fonte de verdade, não duplicar
    aqui. Latte em :root, Mocha em .dark. https://catppuccin.com/palette */
 :root {
 	color-scheme: light;
@@ -52,7 +52,7 @@
 		transparent 70%
 	);
 
-	/* A lib usa serif (Newsreader) no corpo das seções de landing; o tabelacal
+	/* A lib usa serif (Newsreader) no corpo das seções de landing; o tabelhacal
 	   mantém o Work Sans como fonte de corpo em todo o app. */
 	--twui-font-serif: 'Work Sans Variable', ui-serif, Georgia, serif;
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { Button } from '@tabeladev/tabelawebui';
+	import { Button } from '@tabelhadev/tabelhawebui';
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
 	import ThemeToggle from './ThemeToggle.svelte';
 
@@ -16,7 +16,7 @@
 
 <header class="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-sm">
 	<div class="flex h-14 items-center justify-between gap-4 px-6">
-		<a href={resolve('/')} class="font-mono text-sm font-semibold tracking-tight">tabelacal</a>
+		<a href={resolve('/')} class="font-mono text-sm font-semibold tracking-tight">tabelhacal</a>
 
 		{#if loggedIn}
 			<nav class="flex gap-4">

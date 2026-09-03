@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button, Card, Badge } from '@tabeladev/tabelawebui';
+	import { Button, Card, Badge } from '@tabelhadev/tabelhawebui';
 	import PushSubscribe from '$lib/PushSubscribe.svelte';
 	import ReminderSettings from '$lib/ReminderSettings.svelte';
 	import { resolve } from '$app/paths';

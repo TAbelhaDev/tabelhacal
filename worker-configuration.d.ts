@@ -6,7 +6,7 @@ interface __BaseEnv_Env {
 	DB: D1Database;
 	ASSETS: Fetcher;
 	VAPID_PUBLIC_KEY: "BEEwR9B8aMZVJMsEVMsawOI9wmvpLupg7CEOFj2FBaCeEW9eLLnfjDHidioYyHtunT-hPCbvZXhNf_QCHXU0tDA";
-	VAPID_SUBJECT: "https://tabelacal.ianptkcs-023.workers.dev";
+	VAPID_SUBJECT: "https://tabelhacal.tabelhadev.workers.dev";
 	ORIGIN: string;
 	MASTER_KEY: string;
 	VAPID_PRIVATE_KEY: string;

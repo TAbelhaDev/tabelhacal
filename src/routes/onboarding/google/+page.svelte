@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { browser } from '$app/environment';
 	import { toast } from 'svelte-sonner';
-	import { Button, Input, Label, Card } from '@tabeladev/tabelawebui';
+	import { Button, Input, Label, Card } from '@tabelhadev/tabelhawebui';
 	import CopyIcon from '@lucide/svelte/icons/copy';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import type { ActionData, PageData } from './$types';

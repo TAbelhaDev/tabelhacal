@@ -1,5 +1,5 @@
 {
-	"name": "tabelacal",
+	"name": "tabelhacal",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -64,6 +64,6 @@
 	"dependencies": {
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"sveltekit-flash-message": "^2.4.6",
-		"@tabeladev/tabelawebui": "^0.13.0"
+		"@tabelhadev/tabelhawebui": "^0.28.4"
 	}
 }

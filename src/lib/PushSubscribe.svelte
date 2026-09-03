@@ -3,7 +3,7 @@
 	// "lembretes proativos". Segue a mesma convenção de interagir com o service
 	// worker (via registration do próprio navigator, não virtual:pwa-register)
 	// e o padrão de toasts de src/lib/ReloadPrompt.svelte.
-	import { Button } from '@tabeladev/tabelawebui';
+	import { Button } from '@tabelhadev/tabelhawebui';
 	import { toast } from 'svelte-sonner';
 
 	let { vapidPublicKey }: { vapidPublicKey: string } = $props();
