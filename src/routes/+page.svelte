@@ -4,11 +4,8 @@
 		Button,
 		buttonVariants,
 		Card,
-		LandingHero,
-		LandingSteps,
-		LandingFeatures,
-		LandingRoadmap,
-		LandingFooter,
+		Landing,
+		MarketingShell,
 		SectionHeading,
 		TerminalWindow
 	} from '@tabelhadev/tabelhawebui';
@@ -97,7 +94,7 @@
 	></div>
 
 	<div class="mx-auto flex w-full max-w-5xl flex-col gap-24 px-6 pt-16 pb-8 md:pt-24">
-		<LandingHero
+		<Landing.Hero
 			eyebrow="Google Calendar em linguagem natural"
 			title="Você escreve. A IA traduz. Você confirma."
 			lead="Peça pra marcar, mudar, cancelar ou responder um convite — do jeito que você falaria com uma pessoa. O TabelaCal transforma isso num evento estruturado do Google Calendar, e só executa depois que você aprovar."
@@ -112,7 +109,7 @@
 					Ver o código
 				</Button>
 			{/snippet}
-		</LandingHero>
+		</Landing.Hero>
 
 		<section aria-hidden="true">
 			<TerminalWindow title="tabelhacal — chat">
@@ -139,7 +136,7 @@
 
 		<section class="flex flex-col gap-8">
 			<SectionHeading eyebrow="Como funciona" title="Quatro passos, e o evento tá na agenda." />
-			<LandingSteps {steps} />
+			<Landing.Steps {steps} />
 		</section>
 
 		<section class="flex flex-col gap-8">
@@ -147,7 +144,7 @@
 				eyebrow="Recursos"
 				title="O que ele faz, e o que ele não faz com os seus dados."
 			/>
-			<LandingFeatures
+			<Landing.Features
 				features={[
 					{
 						icon: keyIcon,
@@ -201,7 +198,7 @@
 				title="O que vem depois."
 				lead="Nada disso existe ainda. Tá aqui porque o roadmap é público — igual o código."
 			/>
-			<LandingRoadmap
+			<Landing.Roadmap
 				items={[
 					{ icon: micIcon, label: 'Entrada por voz' },
 					{ icon: imageIcon, label: 'Entrada por imagem' },
@@ -211,8 +208,9 @@
 			/>
 		</section>
 
-		<LandingFooter
-			name="tabelhacal"
+		<MarketingShell.Footer
+			prefix="TAbelha"
+			suffix="cal"
 			license="AGPL-3.0 · SvelteKit + Cloudflare Workers"
 			repoUrl={REPO_URL}
 			class="-mx-6 px-6"

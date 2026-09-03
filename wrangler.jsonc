@@ -38,15 +38,15 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "ndrc-db",
-			"database_id": "99ced037-55ea-4279-9f8f-fa68b3bcad23",
+			"database_name": "tabelhacal-db",
+			"database_id": "bdd4b417-dabe-4093-ad67-28af362c6a12",
 			"migrations_dir": "drizzle"
 		}
 	],
 	"kv_namespaces": [
 		{
 			"binding": "SESSIONS",
-			"id": "83222c592d2d44a0878f3e5a5653ec81"
+			"id": "e921af29097d482f8f2cca1a4d842486"
 		}
 	]
 }
