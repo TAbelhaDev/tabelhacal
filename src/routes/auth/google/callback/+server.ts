@@ -84,7 +84,7 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 					{
 						type: ToastType.error,
 						message:
-							'O Google não devolveu permissão de acesso contínuo. Remova o acesso do TabelaCal em myaccount.google.com/permissions e tente conectar de novo.'
+							'O Google não devolveu permissão de acesso contínuo. Remova o acesso do TAbelhaCal em myaccount.google.com/permissions e tente conectar de novo.'
 					},
 					cookies
 				);
@@ -122,7 +122,7 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 		await createSession(kv, cookies, user.id);
 		redirect(
 			'/chat',
-			{ type: ToastType.success, message: 'Conta conectada! Bem-vindo ao TabelaCal.' },
+			{ type: ToastType.success, message: 'Conta conectada! Bem-vindo ao TAbelhaCal.' },
 			cookies
 		);
 	}

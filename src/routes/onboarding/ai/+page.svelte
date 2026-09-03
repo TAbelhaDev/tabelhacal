@@ -24,7 +24,7 @@
 			</p>
 			<Card.Title class="font-mono">Configurar IA</Card.Title>
 			<Card.Description>
-				Cole sua própria API key e escolha o modelo que o TabelaCal vai usar pra interpretar seus
+				Cole sua própria API key e escolha o modelo que o TAbelhaCal vai usar pra interpretar seus
 				pedidos de evento.
 			</Card.Description>
 		</Card.Header>
@@ -75,7 +75,7 @@
 							href={AI_PROVIDERS[provider].keyUrl}
 							target="_blank"
 							rel="external noreferrer">Gerar uma chave de {AI_PROVIDERS[provider].label}</a
-						>. O pagamento é direto pro provedor, sem taxa do TabelaCal por cima.
+						>. O pagamento é direto pro provedor, sem taxa do TAbelhaCal por cima.
 					</p>
 				</div>
 

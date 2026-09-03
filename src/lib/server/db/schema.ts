@@ -53,7 +53,7 @@ export const googleTokens = sqliteTable('google_tokens', {
 	expiry: integer('expiry', { mode: 'timestamp' })
 });
 
-// Histórico local de todo evento tocado pelo TabelaCal via chat (create/modify/
+// Histórico local de todo evento tocado pelo TAbelhaCal via chat (create/modify/
 // delete/respond) — não só o que o app criou. `status` marca o que aconteceu;
 // `delete` nunca remove a linha (é assim que o Histórico continua mostrando
 // eventos apagados). Ver README "Histórico".

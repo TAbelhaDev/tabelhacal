@@ -42,9 +42,9 @@ export default defineConfig({
 			strategies: 'generateSW',
 			registerType: 'prompt',
 			manifest: {
-				name: 'TabelaCal',
-				short_name: 'TabelaCal',
-				description: 'Agenda com IA — fale e o TabelaCal cria o evento no seu Google Calendar.',
+				name: 'TAbelhaCal',
+				short_name: 'TAbelhaCal',
+				description: 'Agenda com IA — fale e o TAbelhaCal cria o evento no seu Google Calendar.',
 				theme_color: '#1e1e2e',
 				background_color: '#1e1e2e',
 				display: 'standalone',

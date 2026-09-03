@@ -34,7 +34,7 @@
 			number: '02',
 			color: 'var(--ctp-sapphire)',
 			title: 'A IA traduz',
-			body: 'Sua chave, seu modelo. O TabelaCal vira a frase num evento estruturado: título, data, hora, local, recorrência.'
+			body: 'Sua chave, seu modelo. O TAbelhaCal vira a frase num evento estruturado: título, data, hora, local, recorrência.'
 		},
 		{
 			number: '03',
@@ -83,7 +83,7 @@
 {/snippet}
 
 <svelte:head>
-	<title>TabelaCal</title>
+	<title>TAbelhaCal</title>
 </svelte:head>
 
 <div class="relative flex w-full flex-1 flex-col">
@@ -97,7 +97,7 @@
 		<Landing.Hero
 			eyebrow="Google Calendar em linguagem natural"
 			title="Você escreve. A IA traduz. Você confirma."
-			lead="Peça pra marcar, mudar, cancelar ou responder um convite — do jeito que você falaria com uma pessoa. O TabelaCal transforma isso num evento estruturado do Google Calendar, e só executa depois que você aprovar."
+			lead="Peça pra marcar, mudar, cancelar ou responder um convite — do jeito que você falaria com uma pessoa. O TAbelhaCal transforma isso num evento estruturado do Google Calendar, e só executa depois que você aprovar."
 			note="Sua própria chave de IA + seu próprio projeto Google — a gente te guia em cada passo."
 		>
 			{#snippet actions()}
@@ -151,7 +151,7 @@
 						iconBg: 'color-mix(in srgb, var(--ctp-mauve) 12%, transparent)',
 						iconColor: 'var(--ctp-mauve)',
 						title: 'Sua chave, seu preço',
-						body: 'Cole sua própria API key da DeepSeek, Anthropic ou OpenAI e escolha o modelo. Você paga direto pro provedor, sem taxa do TabelaCal por cima.'
+						body: 'Cole sua própria API key da DeepSeek, Anthropic ou OpenAI e escolha o modelo. Você paga direto pro provedor, sem taxa do TAbelhaCal por cima.'
 					},
 					{
 						icon: shieldIcon,

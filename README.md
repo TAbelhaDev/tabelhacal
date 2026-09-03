@@ -1,6 +1,6 @@
 <div align="center">
 
-# TabelaCal
+# TAbelhaCal
 
 **A calendar you organise by conversation: natural language + AI translate your messages into Google Calendar commands.**
 
@@ -9,7 +9,7 @@
 [![SvelteKit](https://img.shields.io/badge/SvelteKit-Svelte-ff3e00?style=flat-square&logo=svelte&logoColor=white)](https://kit.svelte.dev)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue?style=flat-square)](LICENSE)
-[![Built with tabelawebui](https://img.shields.io/badge/theme-tabelawebui-d6b4f7?style=flat-square)](https://github.com/TAbelhaDev/tabelawebui)
+[![Built with tabelhawebui](https://img.shields.io/badge/theme-tabelhawebui-d6b4f7?style=flat-square)](https://github.com/TAbelhaDev/tabelhawebui)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ianptkcs)
 
@@ -36,7 +36,7 @@ English. See [CONTRIBUTING.md](CONTRIBUTING.md#language) for the convention.
    description). You can confirm it, edit a field by hand, ask the AI for one
    specific adjustment, or cancel.
 4. Once confirmed, the command runs against your Google Calendar and is recorded
-   temporarily in TabelaCal's database, so you can see a history of what was
+   temporarily in TAbelhaCal's database, so you can see a history of what was
    done.
 
 It works as a PWA too: you can install it on a phone or desktop and use it like a
@@ -44,14 +44,14 @@ native app, with automatic updates (a notice appears when a new version ships).
 
 ## Bring your own credentials
 
-Two things separate TabelaCal from an ordinary SaaS, both deliberate design
+Two things separate TAbelhaCal from an ordinary SaaS, both deliberate design
 decisions:
 
 - **The AI key is yours.** During onboarding you paste your own API key and pick
   the provider and model you want. Instead of charging a fixed monthly or yearly
-  fee, TabelaCal lets you dictate your own cost: by choosing a cheaper or more
+  fee, TAbelhaCal lets you dictate your own cost: by choosing a cheaper or more
   expensive model, you decide what you pay. Since the payment goes straight to
-  the provider, there is no TabelaCal operating fee on top.
+  the provider, there is no TAbelhaCal operating fee on top.
 
   Providers supported today, and where to generate a key:
 
@@ -65,19 +65,19 @@ decisions:
     [platform.openai.com/api-keys](https://platform.openai.com/api-keys) (same —
     billing has to be configured on the account).
 
-- **The Google Calendar access is yours too.** If TabelaCal had a single "Google
+- **The Google Calendar access is yours too.** If TAbelhaCal had a single "Google
   app" shared by everyone, sooner or later it would pass the test-user limit and
   need Google's review/verification for sensitive scopes like Calendar's — a
   process that can involve a paid security audit, and that cost would land on
-  someone: either on whoever hosts TabelaCal, or on its users. To avoid it, each
+  someone: either on whoever hosts TAbelhaCal, or on its users. To avoid it, each
   user creates their own project in the Google Cloud Console, enables the
-  Calendar API on it and pastes the generated Client ID/Secret into TabelaCal.
+  Calendar API on it and pastes the generated Client ID/Secret into TAbelhaCal.
   Being an individual project, it never comes close to the limit that would
   require verification, so it stays free and costs nobody any infrastructure.
   Because that is fiddly for anyone not used to this kind of thing, the app walks
   you through the whole process in an onboarding wizard. It is a one-time setup.
 
-In short: TabelaCal handles the hosting, the UI and the orchestration, but you
+In short: TAbelhaCal handles the hosting, the UI and the orchestration, but you
 are the one paying the AI bill and owning your own Google access.
 
 ## Features
@@ -86,7 +86,7 @@ are the one paying the AI bill and owning your own Google access.
   Google Calendar (a wizard explaining how to create the GCP project).
 - **Natural-language chat** to list, create, modify, delete or respond to
   invitations for events on any of your connected calendars (not just
-  `primary`) — including events that existed before TabelaCal — with a
+  `primary`) — including events that existed before TAbelhaCal — with a
   confirmation card before any real change. Recurring events are supported too
   ("every Monday at 9am until the end of the month"), with the option of editing
   a single occurrence or the whole series.
@@ -164,7 +164,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the version history.
 ## License
 
 [AGPL-3.0](LICENSE) — strong copyleft: you may use, modify and even host
-TabelaCal commercially, but any modified version, including one running as a
+TAbelhaCal commercially, but any modified version, including one running as a
 network service (SaaS), has to stay open source under the same license.
 
 Want to contribute? Have a look at `CONTRIBUTING.md`.

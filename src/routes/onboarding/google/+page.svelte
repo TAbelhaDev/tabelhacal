@@ -25,7 +25,7 @@
 	const STEPS: SetupStep[] = [
 		{
 			title: 'Criar um projeto no Google Cloud',
-			description: 'Escolha qualquer nome (ex: "TabelaCal"). Você só faz isso uma vez.',
+			description: 'Escolha qualquer nome (ex: "TAbelhaCal"). Você só faz isso uma vez.',
 			url: 'https://console.cloud.google.com/projectcreate',
 			urlLabel: 'Abrir Google Cloud Console'
 		},
@@ -40,7 +40,7 @@
 			title: 'Configurar a tela de consentimento',
 			description: 'Clique em "Get started" (Começar) e preencha:',
 			items: [
-				'Nome do app: qualquer um (ex: "TabelaCal")',
+				'Nome do app: qualquer um (ex: "TAbelhaCal")',
 				'E-mail de suporte: o seu e-mail',
 				'Audiência ("Audience"): selecione "External"'
 			],
@@ -105,7 +105,7 @@
 			</p>
 			<Card.Title class="font-mono">Conectar Google Calendar</Card.Title>
 			<Card.Description>
-				O TabelaCal não tem um app do Google compartilhado entre usuários.
+				O TAbelhaCal não tem um app do Google compartilhado entre usuários.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-6">
@@ -117,7 +117,7 @@
 					minutos) e cola aqui o Client ID e o Client Secret gerados nele.
 				</p>
 				<p class="text-sm text-muted-foreground">
-					As duas credenciais ficam criptografadas no banco do TabelaCal — nunca em texto puro, e
+					As duas credenciais ficam criptografadas no banco do TAbelhaCal — nunca em texto puro, e
 					nunca vistas por mais ninguém.
 				</p>
 				<div class="flex flex-col gap-2">

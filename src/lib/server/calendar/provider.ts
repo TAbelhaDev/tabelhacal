@@ -1,6 +1,6 @@
 // Contrato que qualquer integração de calendário precisa satisfazer. Hoje só
 // existe `googleCalendarProvider` (ver ./google.ts), mas o desenho já separa
-// "o que o TabelaCal precisa de um provedor de calendário" de "como o Google faz
+// "o que o TAbelhaCal precisa de um provedor de calendário" de "como o Google faz
 // isso especificamente" — pra quando Apple/Outlook entrarem (ver README/
 // ESCOPO.md "outros calendários além do Google"), a expectativa é: um novo
 // arquivo nesta pasta implementando esta mesma interface, mais lógica em
@@ -8,7 +8,7 @@
 // porque só tem um provider possível).
 //
 // `accessToken` é passado em toda chamada (em vez de um provider "logado")
-// porque o TabelaCal já busca/renova o token por request (ver
+// porque o TAbelhaCal já busca/renova o token por request (ver
 // $lib/server/google/tokens.ts) — um provider de outra integração deve seguir
 // o mesmo padrão de token efêmero por chamada, não guardar estado de sessão.
 import type {
